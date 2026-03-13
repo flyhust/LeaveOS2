@@ -649,7 +649,8 @@ let SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 // ══════════════════════════════════════════════
 //  SUPABASE CLIENT
 // ══════════════════════════════════════════════
-
+let supabase;
+   
 function initSupabase() {
   if (!SUPABASE_URL || !SUPABASE_KEY) return false;
 
@@ -850,7 +851,7 @@ function goBackToPhone() {
   document.getElementById('step-otp').classList.remove('active');
   document.getElementById('step-phone').classList.add('active');
   document.getElementById('send-otp-btn').disabled = false;
-  document.getElementById('send-otp-btn').innerHTML = 'Send SMS Code';
+  document.getElementById('send-otp-btn').innerHTML = 'Send Email Code';
 }
 
 function showLoginError(id, msg) {
