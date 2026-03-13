@@ -896,47 +896,76 @@ async function loadUserAndShowApp(user) {
 }
 
 async function loadAppData() {
-  const year = new Date().getFullYear();
 
-  // Load data based on role
-  const [balRes, reqRes, typeRes] = await Promise.all([
-    supabase.from('leave_balances')
+  const year = new Date().getFullYear()
+
+  // Leave balances
+  const balRes = await supabase
+    .from('leave_balances')
+    .select('*, leave_types(name, code)')
+    .eq('employee_id', currentEmployee.id)
+    .eq('year', year)
+
+  appData.balances = balRes.data || []
+
+  // Leave types
+  const typeRes = await supabase
+    .from('leave_types')
+    .select('*')
+
+  appData.leaveTypes = typeRes.data || []
+
+  // Requests based on role
+  if (currentEmployee.role === 'employee') {
+
+    const reqRes = await supabase
+      .from('leave_requests')
       .select('*, leave_types(name, code)')
       .eq('employee_id', currentEmployee.id)
-      .eq('year', year),
+      .order('created_at', { ascending:false })
 
-    currentEmployee.role === 'hr'
-      ? supabase.from('leave_requests').select('*, employees(full_name), leave_types(name, code)').order('created_at', {ascending:false}).limit(50)
-      : currentEmployee.role === 'manager'
-  ? await (async () => {
-      const team = await supabase
-        .from('employees')
-        .select('id')
-        .eq('manager_id', currentEmployee.id);
+    appData.requests = reqRes.data || []
 
-      const ids = (team.data || []).map(e => e.id);
-
-      return supabase
-        .from('leave_requests')
-        .select('*, employees(full_name), leave_types(name, code)')
-        .in('employee_id', ids)
-        .order('created_at', {ascending:false})
-        .limit(30);
-    })()
-
-    supabase.from('leave_types').select('*')
-  ]);
-
-  appData.balances = balRes.data || [];
-  appData.requests = reqRes.data || [];
-  appData.leaveTypes = typeRes.data || [];
-
-  if (currentEmployee.role !== 'employee') {
-    const empRes = await supabase.from('employees').select('*').order('full_name');
-    appData.employees = empRes.data || [];
   }
-}
 
+  else if (currentEmployee.role === 'manager') {
+
+    const team = await supabase
+      .from('employees')
+      .select('id')
+      .eq('manager_id', currentEmployee.id)
+
+    const ids = (team.data || []).map(e => e.id)
+
+    const reqRes = await supabase
+      .from('leave_requests')
+      .select('*, employees(full_name), leave_types(name, code)')
+      .in('employee_id', ids)
+      .order('created_at', { ascending:false })
+
+    appData.requests = reqRes.data || []
+
+  }
+
+  else if (currentEmployee.role === 'hr') {
+
+    const reqRes = await supabase
+      .from('leave_requests')
+      .select('*, employees(full_name), leave_types(name, code)')
+      .order('created_at', { ascending:false })
+
+    appData.requests = reqRes.data || []
+
+    const empRes = await supabase
+      .from('employees')
+      .select('*')
+      .order('full_name')
+
+    appData.employees = empRes.data || []
+
+  }
+
+}
 // ══════════════════════════════════════════════
 //  RENDER APP
 // ══════════════════════════════════════════════
