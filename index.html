@@ -9,7 +9,7 @@
 <style>
 /* ═══════════════════════════════════════
    LEAVEOS · PRODUCTION · v2.0
-   Supabase SMS OTP + Real Data
+   Supabase Email OTP + Real Data
 ═══════════════════════════════════════ */
 :root {
   --bg:#f7f5f2; --bg2:#edeae5; --white:#fff;
@@ -507,26 +507,24 @@ tr:hover td { background:rgba(248,245,242,0.6); }
       </div>
     </div>
 
-    <!-- STEP 1: Phone number -->
+    <!-- STEP 1: Email -->
     <div class="login-step active" id="step-phone">
       <div class="login-title">Welcome back 👋</div>
-      <div class="login-sub">Enter your phone number to receive a verification code via SMS.</div>
+      <div class="login-sub">Enter your work email to receive a verification code.</div>
 
       <div class="login-error" id="phone-error"></div>
 
       <div class="input-group">
-        <label class="input-label">PHONE NUMBER</label>
+        <label class="input-label">WORK EMAIL</label>
         <div class="input-wrap">
-          <span class="input-prefix">+60</span>
-          <input class="form-input has-prefix" id="phone-input" type="tel"
-            placeholder="12 345 6789" maxlength="11"
-            oninput="this.value=this.value.replace(/\D/g,'')"
+          <input class="form-input" id="phone-input" type="email"
+            placeholder="you@company.com"
             onkeydown="if(event.key==='Enter')sendOTP()">
         </div>
       </div>
 
       <button class="btn btn-primary" id="send-otp-btn" onclick="sendOTP()">
-        Send SMS Code
+        Send Email Code
       </button>
       <div style="text-align:center;font-size:12px;color:var(--ink3);margin-top:14px">
         🔒 Secure login · No password needed
@@ -535,12 +533,12 @@ tr:hover td { background:rgba(248,245,242,0.6); }
 
     <!-- STEP 2: OTP -->
     <div class="login-step" id="step-otp">
-      <div class="login-title">Check your SMS 📱</div>
+      <div class="login-title">Check your email 📧</div>
       <div class="login-sub">Enter the 6-digit code sent to <strong id="phone-display"></strong></div>
 
       <div class="sms-sent-info">
         <span>📨</span>
-        <span>Code sent! Check your messages. May take up to 30 seconds.</span>
+        <span>Code sent! Check your inbox. May take up to 1 minute.</span>
       </div>
 
       <div class="login-error" id="otp-error"></div>
@@ -557,7 +555,7 @@ tr:hover td { background:rgba(248,245,242,0.6); }
       <button class="btn btn-primary" id="verify-btn" onclick="verifyOTP()" disabled>
         Verify & Sign In
       </button>
-      <button class="btn btn-ghost" onclick="goBackToPhone()">← Change number</button>
+      <button class="btn btn-ghost" onclick="goBackToPhone()">← Change email</button>
 
       <div class="resend-link" id="resend-area">
         Didn't receive? <span onclick="resendOTP()">Resend code</span>
@@ -758,11 +756,11 @@ function saveConfig() {
 let phoneNumber = '';
 
 async function sendOTP() {
-  const raw = document.getElementById('phone-input').value.trim();
-  if (raw.length < 9) { showLoginError('phone-error', 'Please enter a valid phone number'); return; }
+  const email = document.getElementById('phone-input').value.trim();
+  if (!email || !email.includes('@')) { showLoginError('phone-error', 'Please enter a valid email address'); return; }
 
-  phoneNumber = '+60' + raw;
-  document.getElementById('phone-display').textContent = phoneNumber;
+  phoneNumber = email; // reuse variable for email
+  document.getElementById('phone-display').textContent = email;
 
   const btn = document.getElementById('send-otp-btn');
   btn.disabled = true;
@@ -771,27 +769,27 @@ async function sendOTP() {
 
   try {
     const { error } = await supabase.auth.signInWithOtp({
-      phone: phoneNumber
+      email: email,
+      options: { shouldCreateUser: false }
     });
 
     if (error) throw error;
 
-    // Show OTP step
     document.getElementById('step-phone').classList.remove('active');
     document.getElementById('step-otp').classList.add('active');
     setTimeout(() => document.querySelector('.otp-input').focus(), 100);
 
   } catch(err) {
-    showLoginError('phone-error', err.message || 'Failed to send SMS. Please try again.');
+    showLoginError('phone-error', err.message || 'Email not found. Please contact HR.');
     btn.disabled = false;
-    btn.innerHTML = 'Send SMS Code';
+    btn.innerHTML = 'Send Email Code';
   }
 }
 
 async function resendOTP() {
   document.getElementById('resend-area').innerHTML = 'Sending...';
   try {
-    await supabase.auth.signInWithOtp({ phone: phoneNumber });
+    await supabase.auth.signInWithOtp({ email: phoneNumber, options: { shouldCreateUser: false } });
     document.getElementById('resend-area').innerHTML = '✅ Code resent!';
     setTimeout(() => {
       document.getElementById('resend-area').innerHTML = `Didn't receive? <span onclick="resendOTP()">Resend code</span>`;
@@ -829,9 +827,9 @@ async function verifyOTP() {
 
   try {
     const { data, error } = await supabase.auth.verifyOtp({
-      phone: phoneNumber,
+      email: phoneNumber,
       token: code,
-      type: 'sms'
+      type: 'email'
     });
 
     if (error) throw error;
@@ -870,19 +868,18 @@ async function loadUserAndShowApp(user) {
   currentUser = user;
 
   try {
-    // Get employee record by phone
-    const phone = user.phone;
+    // Get employee record by email
+    const email = user.email;
     const { data: emp, error } = await supabase
       .from('employees')
       .select('*, departments(name)')
-      .eq('phone_wa', phone)
+      .eq('email', email)
       .single();
 
     if (error || !emp) {
-      // Phone not registered
       showLoading(false);
       showLoginScreen();
-      showToast('Phone number not registered. Contact HR.', 'error');
+      showToast('Email not registered. Please contact HR.', 'error');
       await supabase.auth.signOut();
       return;
     }
