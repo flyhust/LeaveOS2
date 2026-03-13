@@ -109,9 +109,10 @@ Verify
 <script>
 
 
-// PUT YOUR SUPABASE DETAILS
+// SUPABASE CONFIG
 const SUPABASE_URL="https://zmbethwexdcqpvqhescl.supabase.co"
-const SUPABASE_KEY="YOUR_ANON_KEY"
+
+const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8"
 
 
 let sbClient=null
@@ -178,7 +179,7 @@ document.getElementById("otpBox").style.display="block"
 }
 
 
-// VERIFY
+// VERIFY OTP
 async function verifyOTP(){
 
 const code=document.getElementById("otp").value
