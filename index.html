@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>LeaveOS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,52 +12,50 @@
 body{
 font-family:sans-serif;
 background:#f7f5f2;
-display:flex;
-align-items:center;
-justify-content:center;
-height:100vh;
 margin:0;
+}
+
+header{
+background:#4a7c59;
+color:white;
+padding:15px;
+}
+
+.container{
+padding:30px;
 }
 
 .card{
 background:white;
-padding:30px;
-border-radius:12px;
-width:340px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-input{
-width:100%;
-padding:10px;
-margin-top:6px;
-margin-bottom:14px;
-border-radius:6px;
-border:1px solid #ddd;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
 }
 
 button{
-width:100%;
-padding:12px;
+padding:10px 16px;
 border:none;
 background:#4a7c59;
 color:white;
-font-weight:bold;
 border-radius:6px;
 cursor:pointer;
 }
 
-button:disabled{
-opacity:0.6;
+input,select{
+padding:8px;
+width:100%;
+margin-bottom:10px;
 }
 
-#otpBox{
-display:none;
+table{
+width:100%;
+border-collapse:collapse;
 }
 
-#app{
-display:none;
-text-align:center;
+td,th{
+padding:8px;
+border-bottom:1px solid #eee;
 }
 
 </style>
@@ -67,182 +63,412 @@ text-align:center;
 </head>
 <body>
 
+<header>
+
+LeaveOS
+
+<span style="float:right">
+
+<span id="userEmail"></span>
+
+<button onclick="logout()">Logout</button>
+
+</span>
+
+</header>
+
+
+<div class="container">
 
 <!-- LOGIN -->
-<div class="card" id="login">
+<div id="login" class="card">
 
-<h2>LeaveOS Login</h2>
+<h2>Login</h2>
 
-<input id="email" placeholder="your@email.com">
+<input id="email" placeholder="email">
 
-<button onclick="sendOTP()" id="sendBtn">
-Send Email Code
-</button>
+<button onclick="sendOTP()">Send Code</button>
 
-<div id="otpBox">
+<input id="otp" placeholder="OTP code">
 
-<input id="otp" placeholder="Enter 6 digit code">
-
-<button onclick="verifyOTP()" id="verifyBtn">
-Verify
-</button>
-
-</div>
+<button onclick="verifyOTP()">Verify</button>
 
 <p id="msg"></p>
 
 </div>
 
 
-<!-- APP -->
-<div id="app">
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none">
 
-<h2>Welcome to LeaveOS</h2>
+<div class="card">
 
-<p id="userEmail"></p>
+<h3>Leave Balance</h3>
 
-<button onclick="logout()">Logout</button>
+<div id="balances"></div>
 
 </div>
 
 
+<div class="card">
+
+<h3>Apply Leave</h3>
+
+<select id="leaveType"></select>
+
+<input type="date" id="startDate">
+
+<input type="date" id="endDate">
+
+<textarea id="reason" placeholder="Reason"></textarea>
+
+<button onclick="applyLeave()">Submit</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>My Requests</h3>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Type</th>
+<th>Start</th>
+<th>End</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="requests"></tbody>
+
+</table>
+
+</div>
+
+
+<div class="card" id="managerPanel" style="display:none">
+
+<h3>Manager Approval</h3>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Employee</th>
+<th>Type</th>
+<th>Dates</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="approvalList"></tbody>
+
+</table>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
 <script>
 
-
-// SUPABASE CONFIG
 const SUPABASE_URL="https://zmbethwexdcqpvqhescl.supabase.co"
 
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8"
+const SUPABASE_KEY="YOUR_KEY"
+
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)
+
+let currentUser=null
+let employee=null
 
 
-let sbClient=null
-let loginEmail=""
-
-
-// INIT
-document.addEventListener("DOMContentLoaded",async()=>{
-
-sbClient=window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-)
-
-const {data:{session}}=await sbClient.auth.getSession()
-
-if(session){
-showApp(session.user)
-}
-
-sbClient.auth.onAuthStateChange((event,session)=>{
-
-if(event==="SIGNED_IN"){
-showApp(session.user)
-}
-
-if(event==="SIGNED_OUT"){
-showLogin()
-}
-
-})
-
-})
-
-
-// SEND OTP
 async function sendOTP(){
 
-const email=document.getElementById("email").value.trim()
+const email=document.getElementById("email").value
 
-if(!email){
-showMsg("Enter email")
-return
-}
-
-loginEmail=email
-
-document.getElementById("sendBtn").disabled=true
-showMsg("Sending code...")
-
-const {error}=await sbClient.auth.signInWithOtp({
-email:email
-})
+const {error}=await sb.auth.signInWithOtp({email})
 
 if(error){
-showMsg(error.message)
-document.getElementById("sendBtn").disabled=false
-return
+msg(error.message)
+}else{
+msg("Check email")
 }
-
-showMsg("Check your email")
-document.getElementById("otpBox").style.display="block"
 
 }
 
 
-// VERIFY OTP
 async function verifyOTP(){
 
 const code=document.getElementById("otp").value
+const email=document.getElementById("email").value
 
-if(code.length<6){
-showMsg("Enter 6 digit code")
-return
-}
-
-document.getElementById("verifyBtn").disabled=true
-showMsg("Verifying...")
-
-const {error}=await sbClient.auth.verifyOtp({
-
-email:loginEmail,
+const {error}=await sb.auth.verifyOtp({
+email,
 token:code,
 type:"email"
+})
+
+if(error) msg(error.message)
+
+}
+
+
+async function init(){
+
+const {data:{session}}=await sb.auth.getSession()
+
+if(!session) return
+
+currentUser=session.user
+
+document.getElementById("login").style.display="none"
+document.getElementById("dashboard").style.display="block"
+
+document.getElementById("userEmail").innerText=currentUser.email
+
+await loadEmployee()
+await loadBalances()
+await loadLeaveTypes()
+await loadRequests()
+await loadApprovals()
+
+}
+
+
+async function loadEmployee(){
+
+let {data}=await sb
+.from("employees")
+.select("*")
+.eq("email",currentUser.email)
+.single()
+
+if(!data){
+
+await sb.from("employees").insert({
+email:currentUser.email,
+full_name:currentUser.email,
+role:"employee"
+})
+
+data=(await sb.from("employees")
+.select("*")
+.eq("email",currentUser.email)
+.single()).data
+
+}
+
+employee=data
+
+if(employee.role!=="employee"){
+document.getElementById("managerPanel").style.display="block"
+}
+
+}
+
+
+async function loadBalances(){
+
+const {data}=await sb
+.from("leave_balances")
+.select(`
+entitled_days,
+used_days,
+leave_types(name)
+`)
+.eq("employee_id",employee.id)
+
+let html=""
+
+data.forEach(b=>{
+
+html+=`
+<div>
+${b.leave_types.name} :
+${b.entitled_days-b.used_days} days
+</div>
+`
 
 })
 
-if(error){
-showMsg(error.message)
-document.getElementById("verifyBtn").disabled=false
-}
+document.getElementById("balances").innerHTML=html
 
 }
 
 
-// SHOW APP
-function showApp(user){
+async function loadLeaveTypes(){
 
-document.getElementById("login").style.display="none"
-document.getElementById("app").style.display="block"
+const {data}=await sb
+.from("leave_types")
+.select("*")
 
-document.getElementById("userEmail").innerText=user.email
+let html=""
+
+data.forEach(t=>{
+
+html+=`<option value="${t.id}">${t.name}</option>`
+
+})
+
+document.getElementById("leaveType").innerHTML=html
 
 }
 
 
-// SHOW LOGIN
-function showLogin(){
+async function applyLeave(){
 
-document.getElementById("login").style.display="block"
-document.getElementById("app").style.display="none"
+const leave_type_id=document.getElementById("leaveType").value
+const start_date=document.getElementById("startDate").value
+const end_date=document.getElementById("endDate").value
+const reason=document.getElementById("reason").value
+
+await sb.from("leave_requests").insert({
+
+employee_id:employee.id,
+leave_type_id,
+start_date,
+end_date,
+days_requested:1,
+reason
+
+})
+
+loadRequests()
 
 }
 
 
-// LOGOUT
+async function loadRequests(){
+
+const {data}=await sb
+.from("leave_requests")
+.select(`
+status,
+start_date,
+end_date,
+leave_types(name)
+`)
+.eq("employee_id",employee.id)
+
+let html=""
+
+data.forEach(r=>{
+
+html+=`
+<tr>
+
+<td>${r.leave_types.name}</td>
+<td>${r.start_date}</td>
+<td>${r.end_date}</td>
+<td>${r.status}</td>
+
+</tr>
+`
+
+})
+
+document.getElementById("requests").innerHTML=html
+
+}
+
+
+async function loadApprovals(){
+
+const {data}=await sb
+.from("leave_requests")
+.select(`
+id,
+start_date,
+end_date,
+employees(full_name),
+leave_types(name)
+`)
+.eq("status","pending")
+
+let html=""
+
+data.forEach(r=>{
+
+html+=`
+<tr>
+
+<td>${r.employees.full_name}</td>
+<td>${r.leave_types.name}</td>
+<td>${r.start_date} → ${r.end_date}</td>
+
+<td>
+
+<button onclick="approve('${r.id}')">
+Approve
+</button>
+
+<button onclick="reject('${r.id}')">
+Reject
+</button>
+
+</td>
+
+</tr>
+`
+
+})
+
+document.getElementById("approvalList").innerHTML=html
+
+}
+
+
+async function approve(id){
+
+await sb
+.from("leave_requests")
+.update({status:"approved"})
+.eq("id",id)
+
+loadApprovals()
+
+}
+
+
+async function reject(id){
+
+await sb
+.from("leave_requests")
+.update({status:"rejected"})
+.eq("id",id)
+
+loadApprovals()
+
+}
+
+
 async function logout(){
-
-await sbClient.auth.signOut()
-
+await sb.auth.signOut()
+location.reload()
 }
 
 
-// MESSAGE
-function showMsg(text){
-
-document.getElementById("msg").innerText=text
-
+function msg(t){
+document.getElementById("msg").innerText=t
 }
 
+
+init()
 
 </script>
 
