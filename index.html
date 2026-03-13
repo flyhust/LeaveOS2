@@ -93,13 +93,31 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);font-
 }
 .btn-ghost:hover { border-color:var(--ink3); color:var(--ink); }
 
-.otp-inputs { display:flex; gap:8px; margin-bottom:16px; }
+.otp-inputs { 
+  display:grid; 
+  grid-template-columns:repeat(6, 1fr); 
+  gap:8px; 
+  margin-bottom:16px; 
+  width:100%;
+}
 .otp-input {
-  flex:1; text-align:center; padding:14px 4px;
-  border:1.5px solid var(--border); border-radius:10px;
-  font-size:20px; font-weight:700;
+  width:100%;
+  aspect-ratio:1;
+  text-align:center; 
+  padding:0;
+  border:1.5px solid var(--border); 
+  border-radius:12px;
+  font-size:22px; 
+  font-weight:700;
   font-family:'JetBrains Mono',monospace;
-  outline:none; transition:all 0.15s;
+  outline:none; 
+  transition:all 0.15s;
+  min-width:0;
+}
+.otp-input:focus { 
+  border-color:var(--sage); 
+  box-shadow:0 0 0 3px rgba(74,124,89,0.12);
+  background:var(--sage-l);
 }
 .otp-input:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(74,124,89,0.12); }
 
