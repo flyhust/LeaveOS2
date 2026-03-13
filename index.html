@@ -64,12 +64,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);font-
 .input-group { margin-bottom:16px; }
 .input-label { font-size:12px; font-weight:700; color:var(--ink2); margin-bottom:6px; display:block; letter-spacing:0.3px; }
 .input-wrap { position:relative; display:flex; align-items:center; }
-.input-prefix {
-  position:absolute; left:14px;
-  font-size:13px; font-weight:600; color:var(--ink3);
-  font-family:'JetBrains Mono',monospace;
-  pointer-events:none;
-}
 .form-input {
   width:100%; padding:12px 14px;
   border:1.5px solid var(--border); border-radius:10px;
@@ -77,7 +71,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);font-
   background:var(--white); color:var(--ink);
   transition:all 0.15s; outline:none;
 }
-.form-input.has-prefix { padding-left:48px; }
 .form-input:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(74,124,89,0.12); }
 .form-input::placeholder { color:var(--ink3); }
 .form-input:disabled { background:var(--bg); color:var(--ink3); }
@@ -641,22 +634,22 @@ tr:hover td { background:rgba(248,245,242,0.6); }
 
 <script>
 // ══════════════════════════════════════════════
-//  CONFIGURATION — EDIT THESE 2 VALUES
+//  CONFIGURATION
 // ══════════════════════════════════════════════
-let SUPABASE_URL  = 'https://zmbethwexdcqpvqhescl.supabase.co';
-let SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
+let SUPABASE_URL = 'https://zmbethwexdcqpvqhescl.supabase.co';
+let SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
 
 // ══════════════════════════════════════════════
 //  SUPABASE CLIENT
+//  ✅ 修复：变量名从 supabase 改为 sb，避免与 CDN 全局变量冲突
 // ══════════════════════════════════════════════
-let supabase;
+let sb;
 
 function initSupabase() {
   if (!SUPABASE_URL || !SUPABASE_KEY) return false;
-
   try {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log("Supabase connected");
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('Supabase connected');
     return true;
   } catch(e) {
     console.error(e);
@@ -680,7 +673,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     weekday:'long', year:'numeric', month:'long', day:'numeric'
   });
 
-  // If no Supabase config, show config screen
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     showConfigScreen();
     return;
@@ -688,14 +680,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   initSupabase();
 
-  // Check existing session
-  const { data:{ session } } = await supabase.auth.getSession();
+  const { data:{ session } } = await sb.auth.getSession();
   if (session) {
     await loadUserAndShowApp(session.user);
   }
 
-  // Listen for auth changes
-  supabase.auth.onAuthStateChange(async (event, session) => {
+  sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) {
       await loadUserAndShowApp(session.user);
     } else if (event === 'SIGNED_OUT') {
@@ -705,7 +695,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ══════════════════════════════════════════════
-//  CONFIG SCREEN (shown when no Supabase keys)
+//  CONFIG SCREEN
 // ══════════════════════════════════════════════
 function showConfigScreen() {
   document.getElementById('login-screen').innerHTML = `
@@ -751,20 +741,22 @@ function saveConfig() {
   localStorage.setItem('sb_key', key);
   SUPABASE_URL = url; SUPABASE_KEY = key;
   initSupabase();
-  // Reload to proper login screen
   location.reload();
 }
 
 // ══════════════════════════════════════════════
 //  OTP LOGIN
 // ══════════════════════════════════════════════
-let phoneNumber = '';
+let userEmail = '';
 
 async function sendOTP() {
   const email = document.getElementById('phone-input').value.trim().toLowerCase();
-  if (!email || !email.includes('@')) { showLoginError('phone-error', 'Please enter a valid email address'); return; }
+  if (!email || !email.includes('@')) {
+    showLoginError('phone-error', 'Please enter a valid email address');
+    return;
+  }
 
-  phoneNumber = email; // reuse variable for email
+  userEmail = email;
   document.getElementById('phone-display').textContent = email;
 
   const btn = document.getElementById('send-otp-btn');
@@ -773,11 +765,7 @@ async function sendOTP() {
   hideLoginError('phone-error');
 
   try {
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email,
-   
-    });
-
+    const { error } = await sb.auth.signInWithOtp({ email: email });
     if (error) throw error;
 
     document.getElementById('step-phone').classList.remove('active');
@@ -794,7 +782,7 @@ async function sendOTP() {
 async function resendOTP() {
   document.getElementById('resend-area').innerHTML = 'Sending...';
   try {
-    await supabase.auth.signInWithOtp({ email: phoneNumber, options: { shouldCreateUser: false } });
+    await sb.auth.signInWithOtp({ email: userEmail, options: { shouldCreateUser: false } });
     document.getElementById('resend-area').innerHTML = '✅ Code resent!';
     setTimeout(() => {
       document.getElementById('resend-area').innerHTML = `Didn't receive? <span onclick="resendOTP()">Resend code</span>`;
@@ -808,8 +796,6 @@ function otpInput(el, idx) {
   el.value = el.value.replace(/\D/g, '').slice(-1);
   const inputs = document.querySelectorAll('.otp-input');
   if (el.value && idx < 5) inputs[idx + 1].focus();
-
-  // Check if all filled
   const code = [...inputs].map(i => i.value).join('');
   document.getElementById('verify-btn').disabled = code.length < 6;
 }
@@ -831,14 +817,12 @@ async function verifyOTP() {
   hideLoginError('otp-error');
 
   try {
-    const { data, error } = await supabase.auth.verifyOtp({
-      email: phoneNumber,
+    const { data, error } = await sb.auth.verifyOtp({
+      email: userEmail,
       token: code,
       type: 'email'
     });
-
     if (error) throw error;
-    // onAuthStateChange will handle the rest
 
   } catch(err) {
     showLoginError('otp-error', err.message || 'Invalid code. Please try again.');
@@ -873,19 +857,17 @@ async function loadUserAndShowApp(user) {
   currentUser = user;
 
   try {
-    // Get employee record by email
-    const email = user.email;
-    const { data: emp, error } = await supabase
+    const { data: emp, error } = await sb
       .from('employees')
       .select('*, departments(name)')
-      .eq('email', email.toLowerCase())
+      .eq('email', user.email.toLowerCase())
       .single();
 
     if (error || !emp) {
       showLoading(false);
       showLoginScreen();
       showToast('Email not registered. Please contact HR.', 'error');
-      await supabase.auth.signOut();
+      await sb.auth.signOut();
       return;
     }
 
@@ -901,76 +883,54 @@ async function loadUserAndShowApp(user) {
 }
 
 async function loadAppData() {
+  const year = new Date().getFullYear();
 
-  const year = new Date().getFullYear()
-
-  // Leave balances
-  const balRes = await supabase
+  const balRes = await sb
     .from('leave_balances')
     .select('*, leave_types(name, code)')
     .eq('employee_id', currentEmployee.id)
-    .eq('year', year)
+    .eq('year', year);
+  appData.balances = balRes.data || [];
 
-  appData.balances = balRes.data || []
+  const typeRes = await sb.from('leave_types').select('*');
+  appData.leaveTypes = typeRes.data || [];
 
-  // Leave types
-  const typeRes = await supabase
-    .from('leave_types')
-    .select('*')
-
-  appData.leaveTypes = typeRes.data || []
-
-  // Requests based on role
   if (currentEmployee.role === 'employee') {
-
-    const reqRes = await supabase
+    const reqRes = await sb
       .from('leave_requests')
       .select('*, leave_types(name, code)')
       .eq('employee_id', currentEmployee.id)
-      .order('created_at', { ascending:false })
+      .order('created_at', { ascending: false });
+    appData.requests = reqRes.data || [];
 
-    appData.requests = reqRes.data || []
-
-  }
-
-  else if (currentEmployee.role === 'manager') {
-
-    const team = await supabase
+  } else if (currentEmployee.role === 'manager') {
+    const team = await sb
       .from('employees')
       .select('id')
-      .eq('manager_id', currentEmployee.id)
-
-    const ids = (team.data || []).map(e => e.id)
-
-    const reqRes = await supabase
+      .eq('manager_id', currentEmployee.id);
+    const ids = (team.data || []).map(e => e.id);
+    const reqRes = await sb
       .from('leave_requests')
       .select('*, employees(full_name), leave_types(name, code)')
       .in('employee_id', ids)
-      .order('created_at', { ascending:false })
+      .order('created_at', { ascending: false });
+    appData.requests = reqRes.data || [];
 
-    appData.requests = reqRes.data || []
-
-  }
-
-  else if (currentEmployee.role === 'hr') {
-
-    const reqRes = await supabase
+  } else if (currentEmployee.role === 'hr') {
+    const reqRes = await sb
       .from('leave_requests')
       .select('*, employees(full_name), leave_types(name, code)')
-      .order('created_at', { ascending:false })
+      .order('created_at', { ascending: false });
+    appData.requests = reqRes.data || [];
 
-    appData.requests = reqRes.data || []
-
-    const empRes = await supabase
+    const empRes = await sb
       .from('employees')
       .select('*')
-      .order('full_name')
-
-    appData.employees = empRes.data || []
-
+      .order('full_name');
+    appData.employees = empRes.data || [];
   }
-
 }
+
 // ══════════════════════════════════════════════
 //  RENDER APP
 // ══════════════════════════════════════════════
@@ -989,18 +949,13 @@ function renderApp() {
     role === 'manager' ? '👔 Manager — Viewing your team + your own leave' :
     '👤 Employee — Viewing your personal leave data';
 
-  // Build nav based on role
   const navItems = getNavItems(role);
   document.getElementById('sidebar-nav').innerHTML = navItems.sidebar;
   document.getElementById('mobile-nav-items').innerHTML = navItems.mobile;
 
-  // Show apply btn for employees & managers
   if (role !== 'hr') document.getElementById('apply-btn').style.display = 'flex';
-
-  // Show menu btn on mobile
   document.getElementById('menu-btn').style.display = 'block';
 
-  // Render content
   renderContent('dashboard');
 }
 
@@ -1071,7 +1026,6 @@ function renderDashboard() {
   const role = currentEmployee.role;
   const pending = appData.requests.filter(r=>r.status==='pending').length;
   const approved = appData.requests.filter(r=>r.status==='approved').length;
-  const totalStaff = appData.employees.length || 1;
 
   return `
     <div class="view active">
@@ -1203,7 +1157,7 @@ function renderApplyForm() {
   const typeOptions = appData.leaveTypes.map(t => {
     const bal = appData.balances.find(b => b.leave_type_id === t.id);
     const left = bal ? (bal.entitled_days - bal.used_days) : '?';
-    return `<option value="${t.id}" data-max="${bal?.entitled_days - bal?.used_days || 0}">${t.name} (${left} days left)</option>`;
+    return `<option value="${t.id}" data-max="${bal ? (bal.entitled_days - bal.used_days) : 0}">${t.name} (${left} days left)</option>`;
   }).join('');
 
   return `
@@ -1262,7 +1216,6 @@ function calcDays() {
   preview.style.display = 'flex';
   document.getElementById('days-count').textContent = days;
 
-  // Check balance
   const sel = document.getElementById('leave-type-sel');
   const max = parseInt(sel.options[sel.selectedIndex].dataset.max) || 0;
   const warn = document.getElementById('balance-warn');
@@ -1290,7 +1243,7 @@ async function submitLeave() {
   btn.innerHTML = '<div class="spinner"></div> Submitting...';
 
   try {
-    const { error } = await supabase.from('leave_requests').insert({
+    const { error } = await sb.from('leave_requests').insert({
       employee_id: currentEmployee.id,
       leave_type_id: typeId,
       start_date: start,
@@ -1352,8 +1305,8 @@ async function handleApproval(reqId, action) {
   if (row) { row.style.opacity = '0.4'; row.style.transition = 'opacity 0.3s'; }
 
   try {
-    await supabase.from('leave_requests').update({ status: action }).eq('id', reqId);
-    await supabase.from('approval_logs').insert({
+    await sb.from('leave_requests').update({ status: action }).eq('id', reqId);
+    await sb.from('approval_logs').insert({
       request_id: reqId,
       approver_id: currentEmployee.id,
       action: action,
@@ -1518,11 +1471,10 @@ function closeSidebar() {
 //  AUTH
 // ══════════════════════════════════════════════
 async function logout() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   currentUser = null; currentEmployee = null;
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
-  // Reset OTP form
   document.getElementById('step-otp').classList.remove('active');
   document.getElementById('step-phone').classList.add('active');
   document.getElementById('send-otp-btn').disabled = false;
@@ -1558,7 +1510,6 @@ function fmtDate(d) {
   return new Date(d).toLocaleDateString('en-MY', {day:'numeric', month:'short', year:'numeric'});
 }
 
-// Mobile resize
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) closeSidebar();
   if (window.innerWidth <= 768) {
