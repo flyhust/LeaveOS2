@@ -148,65 +148,95 @@ showLogin()
 })
 
 
-// SEND OTP
-async function sendOTP(){
+async function sendOTP() {
 
-const email=document.getElementById("email").value.trim()
+  const email = document.getElementById("phone-input").value.trim();
 
-if(!email){
-showMsg("Enter email")
-return
+  if (!email || !email.includes("@")) {
+    showLoginError("phone-error", "Please enter a valid email address");
+    return;
+  }
+
+  phoneNumber = email;
+
+  document.getElementById("phone-display").textContent = email;
+
+  const btn = document.getElementById("send-otp-btn");
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Sending...';
+
+  hideLoginError("phone-error");
+
+  try {
+
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: email,
+      options: {
+        shouldCreateUser: false
+      }
+    });
+
+    if (error) throw error;
+
+    document.getElementById("step-phone").classList.remove("active");
+    document.getElementById("step-otp").classList.add("active");
+
+    setTimeout(() => {
+      document.querySelector(".otp-input").focus();
+    }, 100);
+
+  } catch (err) {
+
+    showLoginError("phone-error", err.message || "Failed to send code");
+
+    btn.disabled = false;
+    btn.innerHTML = "Send Email Code";
+
+  }
+
 }
-
-loginEmail=email
-
-document.getElementById("sendBtn").disabled=true
-showMsg("Sending code...")
-
-const {error}=await sbClient.auth.signInWithOtp({
-email:email
-})
-
-if(error){
-showMsg(error.message)
-document.getElementById("sendBtn").disabled=false
-return
-}
-
-showMsg("Check your email")
-document.getElementById("otpBox").style.display="block"
-
-}
-
 
 // VERIFY OTP
-async function verifyOTP(){
+async function verifyOTP() {
 
-const code=document.getElementById("otp").value
+  const inputs = document.querySelectorAll(".otp-input");
 
-if(code.length<6){
-showMsg("Enter 6 digit code")
-return
+  const code = [...inputs].map(i => i.value).join("");
+
+  if (code.length < 6) return;
+
+  const btn = document.getElementById("verify-btn");
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Verifying...';
+
+  hideLoginError("otp-error");
+
+  try {
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: phoneNumber,
+      token: code,
+      type: "email"
+    });
+
+    if (error) throw error;
+
+  } catch (err) {
+
+    showLoginError("otp-error", err.message || "Invalid code");
+
+    btn.disabled = false;
+    btn.innerHTML = "Verify & Sign In";
+
+    inputs.forEach(i => i.value = "");
+
+    inputs[0].focus();
+
+  }
+
 }
-
-document.getElementById("verifyBtn").disabled=true
-showMsg("Verifying...")
-
-const {error}=await sbClient.auth.verifyOtp({
-
-email:loginEmail,
-token:code,
-type:"email"
-
-})
-
-if(error){
-showMsg(error.message)
-document.getElementById("verifyBtn").disabled=false
-}
-
-}
-
 
 // SHOW APP
 function showApp(user){
