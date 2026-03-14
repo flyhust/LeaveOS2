@@ -665,6 +665,7 @@ async function bootApp(user) {
   try {
     const email = user.email || user.user_metadata?.email;
     if (!email) {
+       appReady = false; 
       loading(false); showLogin();
       toast('Could not detect email.','err');
       await sb.auth.signOut();
@@ -679,6 +680,7 @@ async function bootApp(user) {
       .limit(1);
 
     if (error || !data?.[0]) {
+       appReady = false; 
       loading(false); showLogin();
       toast('Email not registered. Contact HR.','err');
       await sb.auth.signOut();
