@@ -488,12 +488,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
+  // 只用 onAuthStateChange，不单独调用 getSession
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session && !booting) {
+    if (event === 'SIGNED_IN' && session) {
       await bootApp(session.user);
     }
     if (event === 'SIGNED_OUT') showLogin();
   });
+});
 
   const { data: { session } } = await sb.auth.getSession();
   if (session && !booting) {
@@ -503,7 +505,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ═══ BOOT APP (只有一个！) ═══
 async function bootApp(user) {
-  if (booting || booted) return;  // 两个都检查
+  if (booting) return;
   booting = true;
   loading('Loading your profile...');
   ME = user;
@@ -516,7 +518,6 @@ async function bootApp(user) {
       .limit(1);
 
     if (error) throw error;
-
     const emp = data?.[0];
 
     if (!emp) {
@@ -528,10 +529,8 @@ async function bootApp(user) {
 
     if (emp.department_id) {
       const { data: dept } = await sb
-        .from('departments')
-        .select('name')
-        .eq('id', emp.department_id)
-        .single();
+        .from('departments').select('name')
+        .eq('id', emp.department_id).single();
       emp.departments = dept || null;
     } else {
       emp.departments = null;
@@ -540,14 +539,13 @@ async function bootApp(user) {
     EMP = emp;
     await loadData();
     renderApp();
-    booted = true;  // 成功才标记
 
   } catch (e) {
     console.error('BOOT ERROR', e);
     toast('Error: ' + e.message, 'err');
   } finally {
     loading(false);
-    booting = false;  // 无论成功失败都解锁，允许重试
+    booting = false;  // 每次都重置，refresh 可以重新进
   }
 }
 // ═══ LOAD DATA ═══
