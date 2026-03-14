@@ -480,6 +480,7 @@ let DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[],
 let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
 let curEmail = '';
 let booting = false;
+let booted = false;  // 成功启动后才设为 true
 
 // ═══ INIT ═══
 document.addEventListener('DOMContentLoaded', async () => {
@@ -502,7 +503,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ═══ BOOT APP (只有一个！) ═══
 async function bootApp(user) {
-  if (booting) return;
+  if (booting || booted) return;  // 两个都检查
   booting = true;
   loading('Loading your profile...');
   ME = user;
@@ -519,7 +520,6 @@ async function bootApp(user) {
     const emp = data?.[0];
 
     if (!emp) {
-      booting = false;
       showLogin();
       toast('Email not registered. Contact HR.', 'err');
       await sb.auth.signOut();
@@ -540,16 +540,16 @@ async function bootApp(user) {
     EMP = emp;
     await loadData();
     renderApp();
+    booted = true;  // 成功才标记
 
   } catch (e) {
-    booting = false;
     console.error('BOOT ERROR', e);
     toast('Error: ' + e.message, 'err');
   } finally {
     loading(false);
+    booting = false;  // 无论成功失败都解锁，允许重试
   }
 }
-
 // ═══ LOAD DATA ═══
 async function loadData() {
   const yr = new Date().getFullYear();
@@ -1344,6 +1344,7 @@ function sendWAReport() {
 // ═══ AUTH ═══
 async function doLogout() {
   booting = false;
+  booted = false; 
   await sb.auth.signOut();
   ME = null; EMP = null;
   DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
