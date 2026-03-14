@@ -7,9 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-/* ═══════════════════════════════════════
-   LeaveOS v2.0 · Mobile-First · Full Features
-═══════════════════════════════════════ */
 :root {
   --bg:#f5f4f1; --bg2:#eeece8; --white:#fff;
   --ink:#18181b; --ink2:#52525b; --ink3:#a1a1aa;
@@ -29,13 +26,9 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{font-size:16px;}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
-
-/* ══ SCROLLBAR ══ */
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
-
-/* ══ LOGIN ══ */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
   padding:20px;background:var(--bg);
   background-image:radial-gradient(circle at 15% 15%,rgba(61,122,82,0.08) 0%,transparent 50%),
@@ -85,12 +78,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 @keyframes spin{to{transform:rotate(360deg)}}
 .resend{text-align:center;font-size:13px;color:var(--ink3);margin-top:14px;}
 .resend span{color:var(--sage);cursor:pointer;font-weight:600;}
-
-/* ══ APP SHELL ══ */
 #app{display:none;}
 .app-wrap{display:flex;min-height:100vh;}
-
-/* ══ SIDEBAR ══ */
 .sidebar{width:256px;background:var(--ink);display:flex;flex-direction:column;
   position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s cubic-bezier(.16,1,.3,1);}
 .sidebar-head{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,.07);}
@@ -122,13 +111,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 .logout-btn{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.25);
   cursor:pointer;font-size:18px;padding:4px;border-radius:4px;transition:color .15s;}
 .logout-btn:hover{color:var(--rose);}
-
-/* OVERLAY */
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190;
   backdrop-filter:blur(2px);}
 .sidebar-overlay.show{display:block;}
-
-/* ══ MAIN ══ */
 .main{margin-left:256px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
 .topbar{background:var(--white);border-bottom:1px solid var(--border);
   padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;
@@ -143,8 +128,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
   border:none;border-radius:var(--radius-sm);padding:9px 18px;
   font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;}
 .top-btn:hover{background:#2d6b42;}
-.top-btn.secondary{background:var(--bg2);color:var(--ink2);border:1px solid var(--border);}
-.top-btn.secondary:hover{background:var(--border);}
 .notif-btn{width:36px;height:36px;border-radius:var(--radius-sm);
   background:var(--bg);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative;}
@@ -153,13 +136,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 .role-bar{background:var(--ink);color:rgba(255,255,255,.45);text-align:center;
   font-size:11px;padding:5px;font-family:var(--mono);letter-spacing:.5px;}
 .content{padding:24px;flex:1;}
-
-/* ══ VIEWS ══ */
 .view{display:none;}
 .view.active{display:block;animation:fadeIn .2s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══ STATS ══ */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
 .stat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
   padding:18px 20px;box-shadow:var(--shadow);transition:all .2s;cursor:default;}
@@ -169,8 +148,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 .stat-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;}
 .stat-val{font-size:30px;font-weight:800;font-family:var(--mono);line-height:1;margin-bottom:4px;}
 .stat-lbl{font-size:12px;color:var(--ink3);font-weight:500;}
-
-/* ══ CARDS ══ */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
   box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;}
 .card-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 0;}
@@ -179,8 +156,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
   padding:5px 10px;border-radius:var(--radius-xs);transition:background .15s;}
 .card-act:hover{background:var(--sage-l);}
 .card-body{padding:16px 20px 20px;}
-
-/* ══ BALANCE CARDS ══ */
 .bal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px 20px 20px;}
 .bal-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:15px;}
 .bal-type{font-size:10px;font-weight:700;color:var(--ink3);letter-spacing:.8px;
@@ -191,8 +166,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 .bal-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
 .bal-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.4,0,.2,1);}
 .bal-rem{font-size:11px;color:var(--ink3);margin-top:5px;}
-
-/* ══ TABLE ══ */
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 th{background:var(--bg);padding:10px 16px;text-align:left;font-size:11px;
@@ -201,8 +174,6 @@ th{background:var(--bg);padding:10px 16px;text-align:left;font-size:11px;
 td{padding:13px 16px;border-bottom:1px solid rgba(228,228,231,.5);font-size:14px;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(245,244,241,.6);}
-
-/* ══ BADGES ══ */
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
   padding:3px 10px;border-radius:20px;white-space:nowrap;}
 .badge-approved,.badge-active{background:var(--sage-l);color:var(--sage);}
@@ -211,8 +182,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .badge-info{background:var(--sky-l);color:var(--sky);}
 .badge-purple{background:var(--purple-l);color:var(--purple);}
 .badge-grey{background:var(--bg2);color:var(--ink3);}
-
-/* ══ PENDING LIST ══ */
 .pend-list{padding:4px 0 16px;}
 .pend-item{display:flex;align-items:center;gap:14px;padding:14px 20px;
   border-bottom:1px solid rgba(228,228,231,.5);transition:background .15s;}
@@ -231,12 +200,8 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .btn-ok:hover{background:var(--sage);color:#fff;}
 .btn-no{background:var(--rose-l);color:var(--rose);}
 .btn-no:hover{background:var(--rose);color:#fff;}
-
-/* ══ GRID ══ */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-
-/* ══ FORM ══ */
 .form-row{margin-bottom:15px;}
 .form-lbl{font-size:12px;font-weight:700;color:var(--ink2);display:block;margin-bottom:6px;}
 .form-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
@@ -259,8 +224,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
   transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .submit-btn:hover{background:#2d6b42;transform:translateY(-1px);}
 .submit-btn:disabled{background:var(--sage-m);cursor:not-allowed;transform:none;}
-
-/* ══ CALENDAR ══ */
 .cal-wrap{padding:16px 20px 20px;}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .cal-month{font-size:16px;font-weight:700;}
@@ -268,8 +231,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
   width:32px;height:32px;cursor:pointer;font-size:14px;transition:all .15s;}
 .cal-arrow:hover{background:var(--bg2);}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-.cal-dow{text-align:center;font-size:10px;font-weight:700;color:var(--ink3);
-  padding:6px 0;letter-spacing:.5px;}
+.cal-dow{text-align:center;font-size:10px;font-weight:700;color:var(--ink3);padding:6px 0;letter-spacing:.5px;}
 .cal-day{text-align:center;padding:6px 3px;border-radius:6px;font-size:13px;
   font-weight:500;cursor:default;position:relative;min-height:36px;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;}
@@ -281,16 +243,12 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .cal-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;}
 .cal-leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2);}
 .cal-leg-dot{width:10px;height:10px;border-radius:3px;}
-
-/* ══ CHART ══ */
 .chart-wrap{padding:16px 20px 20px;}
 .chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;margin-bottom:8px;}
 .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
 .chart-bar{width:100%;border-radius:5px 5px 0 0;transition:height .6s cubic-bezier(.4,0,.2,1);min-height:4px;}
 .chart-lbl{font-size:10px;color:var(--ink3);text-align:center;font-weight:600;}
 .chart-val{font-size:10px;font-weight:700;font-family:var(--mono);}
-
-/* ══ TOGGLE ══ */
 .toggle{width:42px;height:24px;border-radius:12px;cursor:pointer;position:relative;
   transition:background .2s;flex-shrink:0;border:none;}
 .toggle.on{background:var(--sage);}
@@ -299,29 +257,21 @@ tr:hover td{background:rgba(245,244,241,.6);}
   border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
 .toggle.on::after{left:22px;}
 .toggle.off::after{left:4px;}
-
-/* ══ SETTINGS ROWS ══ */
 .set-row{display:flex;align-items:center;justify-content:space-between;
   padding:14px 0;border-bottom:1px solid rgba(228,228,231,.5);}
 .set-row:last-child{border-bottom:none;}
 .set-lbl{font-size:14px;font-weight:600;}
 .set-desc{font-size:12px;color:var(--ink3);margin-top:2px;}
-
-/* ══ LOADING ══ */
 .loading-wrap{position:fixed;inset:0;background:rgba(245,244,241,.88);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   z-index:999;gap:16px;backdrop-filter:blur(4px);}
 .loading-ring{width:44px;height:44px;border:3px solid var(--border);
   border-top-color:var(--sage);border-radius:50%;animation:spin .8s linear infinite;}
 .loading-txt{font-size:14px;font-weight:600;color:var(--ink3);}
-
-/* ══ EMPTY ══ */
 .empty{text-align:center;padding:56px 24px;color:var(--ink3);}
 .empty-ico{font-size:44px;margin-bottom:14px;}
 .empty-ttl{font-size:15px;font-weight:700;color:var(--ink2);margin-bottom:4px;}
 .empty-sub{font-size:13px;}
-
-/* ══ TOAST ══ */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
   background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;
   font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);
@@ -329,8 +279,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.ok{background:var(--sage);}
 .toast.err{background:var(--rose);}
-
-/* ══ MOBILE NAV ══ */
 .mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;
   background:var(--white);border-top:1px solid var(--border);z-index:150;
   padding-bottom:env(safe-area-inset-bottom);}
@@ -339,8 +287,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
   padding:10px 4px 8px;font-size:10px;font-weight:600;color:var(--ink3);cursor:pointer;}
 .mob-nav-item.active{color:var(--sage);}
 .mob-nav-ico{font-size:20px;}
-
-/* ══ MODAL ══ */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;
   align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
 .modal-bg.show{display:flex;}
@@ -350,12 +296,8 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .modal-title{font-size:17px;font-weight:700;margin-bottom:20px;display:flex;
   align-items:center;justify-content:space-between;}
 .modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink3);}
-
-/* ══ EMPLOYEE AVATAR ══ */
 .emp-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
   justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
-
-/* ══ REPORT BUTTONS ══ */
 .report-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--radius-sm);
   font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:all .15s;}
 .report-btn.csv{background:var(--sage-l);color:var(--sage);}
@@ -364,8 +306,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .report-btn.pdf:hover{background:var(--rose);color:#fff;}
 .report-btn.wa{background:#25d366;color:#fff;}
 .report-btn.wa:hover{background:#128c4a;}
-
-/* ══ RESPONSIVE ══ */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%);}
   .sidebar.open{transform:translateX(0);}
@@ -388,7 +328,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-brand">
@@ -398,8 +337,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
         <div class="login-brand-sub">HR MANAGEMENT</div>
       </div>
     </div>
-
-    <!-- Step 1: Email -->
     <div class="login-step active" id="step-email">
       <div class="login-title">Welcome back 👋</div>
       <div class="login-sub">Enter your work email to receive a sign-in code.</div>
@@ -410,12 +347,8 @@ tr:hover td{background:rgba(245,244,241,.6);}
           onkeydown="if(event.key==='Enter')doSendOTP()">
       </div>
       <button class="btn-primary" id="btn-send" onclick="doSendOTP()">Send Sign-in Code</button>
-      <div style="text-align:center;font-size:12px;color:var(--ink3);margin-top:14px">
-        🔒 Secure · No password needed
-      </div>
+      <div style="text-align:center;font-size:12px;color:var(--ink3);margin-top:14px">🔒 Secure · No password needed</div>
     </div>
-
-    <!-- Step 2: OTP -->
     <div class="login-step" id="step-otp">
       <div class="login-title">Check your email 📧</div>
       <div class="login-sub">6-digit code sent to <strong id="show-email"></strong></div>
@@ -436,62 +369,57 @@ tr:hover td{background:rgba(245,244,241,.6);}
   </div>
 </div>
 
-<!-- LOADING -->
 <div class="loading-wrap" id="loading" style="display:none">
   <div class="loading-ring"></div>
   <div class="loading-txt" id="loading-txt">Loading...</div>
 </div>
 
-<!-- APP -->
 <div id="app">
-<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
-<div class="app-wrap">
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-head">
-      <div class="brand">
-        <div class="brand-icon">🌿</div>
-        <div>
-          <div class="brand-name">LeaveOS</div>
-          <div class="brand-ver">V2.0</div>
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <div class="app-wrap">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <div class="brand">
+          <div class="brand-icon">🌿</div>
+          <div>
+            <div class="brand-name">LeaveOS</div>
+            <div class="brand-ver">V2.0</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="sidebar-nav" id="sidebar-nav"></div>
-    <div class="sidebar-foot">
-      <div class="user-av" id="sb-av">?</div>
-      <div>
-        <div class="user-name" id="sb-name">—</div>
-        <div class="user-role" id="sb-role">—</div>
-      </div>
-      <button class="logout-btn" onclick="doLogout()" title="Sign out">⎋</button>
-    </div>
-  </div>
-
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-left">
-        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+      <div class="sidebar-nav" id="sidebar-nav"></div>
+      <div class="sidebar-foot">
+        <div class="user-av" id="sb-av">?</div>
         <div>
-          <div class="page-title" id="page-title">Dashboard</div>
-          <div class="page-date" id="page-date"></div>
+          <div class="user-name" id="sb-name">—</div>
+          <div class="user-role" id="sb-role">—</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()" title="Sign out">⎋</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+          <div>
+            <div class="page-title" id="page-title">Dashboard</div>
+            <div class="page-date" id="page-date"></div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="notif-btn"><div class="notif-dot"></div>🔔</div>
+          <button class="top-btn" id="apply-btn" onclick="nav('apply')" style="display:none">＋ Apply Leave</button>
         </div>
       </div>
-      <div class="topbar-right">
-        <div class="notif-btn"><div class="notif-dot"></div>🔔</div>
-        <button class="top-btn" id="apply-btn" onclick="nav('apply')" style="display:none">＋ Apply Leave</button>
-      </div>
+      <div class="role-bar" id="role-bar"></div>
+      <div class="content" id="content"></div>
     </div>
-    <div class="role-bar" id="role-bar"></div>
-    <div class="content" id="content"></div>
+  </div>
+  <div class="mob-nav" id="mob-nav">
+    <div class="mob-nav-items" id="mob-nav-items"></div>
   </div>
 </div>
 
-<div class="mob-nav" id="mob-nav">
-  <div class="mob-nav-items" id="mob-nav-items"></div>
-</div>
-</div>
-
-<!-- ADD EMPLOYEE MODAL -->
 <div class="modal-bg" id="modal-emp">
   <div class="modal">
     <div class="modal-title">Add Employee <button class="modal-close" onclick="closeModal('modal-emp')">×</button></div>
@@ -518,7 +446,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
   </div>
 </div>
 
-<!-- ADD DEPARTMENT MODAL -->
 <div class="modal-bg" id="modal-dept">
   <div class="modal">
     <div class="modal-title">Add Department <button class="modal-close" onclick="closeModal('modal-dept')">×</button></div>
@@ -530,7 +457,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
   </div>
 </div>
 
-<!-- ADD HOLIDAY MODAL -->
 <div class="modal-bg" id="modal-hol">
   <div class="modal">
     <div class="modal-title">Add Public Holiday <button class="modal-close" onclick="closeModal('modal-hol')">×</button></div>
@@ -545,31 +471,22 @@ tr:hover td{background:rgba(245,244,241,.6);}
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════
-//  CONFIG
-// ═══════════════════════════════════════
 const SUPABASE_URL = 'https://zmbethwexdcqpvqhescl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ═══════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════
 let ME = null, EMP = null;
 let DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
 let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
 let curEmail = '';
 let booting = false;
 
-// ═══════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════
+// ═══ INIT ═══
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  // 先设置监听器
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session && !booting) {
       await bootApp(session.user);
@@ -577,19 +494,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (event === 'SIGNED_OUT') showLogin();
   });
 
-  // 再检查现有 session
   const { data: { session } } = await sb.auth.getSession();
   if (session && !booting) {
     await bootApp(session.user);
   }
 });
 
-// ═══════════════════════════════════════
-//  BOOT APP
-// ═══════════════════════════════════════
+// ═══ BOOT APP (只有一个！) ═══
 async function bootApp(user) {
   if (booting) return;
-  booting = true;          // 锁上，永远不解锁（登录一次就够了）
+  booting = true;
   loading('Loading your profile...');
   ME = user;
 
@@ -605,7 +519,7 @@ async function bootApp(user) {
     const emp = data?.[0];
 
     if (!emp) {
-      booting = false;     // 失败才解锁，允许重试
+      booting = false;
       showLogin();
       toast('Email not registered. Contact HR.', 'err');
       await sb.auth.signOut();
@@ -628,22 +542,20 @@ async function bootApp(user) {
     renderApp();
 
   } catch (e) {
-    booting = false;       // 出错才解锁
+    booting = false;
     console.error('BOOT ERROR', e);
     toast('Error: ' + e.message, 'err');
   } finally {
     loading(false);
-    // ← 注意：这里不重置 booting！
   }
 }
 
+// ═══ LOAD DATA ═══
 async function loadData() {
-
   const yr = new Date().getFullYear();
   const role = EMP.role;
 
   const [balR, reqR, typeR, holR, deptR] = await Promise.all([
-
     sb.from('leave_balance')
       .select('*, leave_type(name,code,color)')
       .eq('employee_id', EMP.id)
@@ -652,36 +564,20 @@ async function loadData() {
     role === 'super_admin' || role === 'operation_admin'
       ? sb.from('leave_request')
           .select('*, employees(full_name,department_id), leave_type(name,code)')
-          .order('created_at',{ascending:false})
-          .limit(100)
-
+          .order('created_at',{ascending:false}).limit(100)
       : role === 'dept_manager'
         ? sb.from('leave_request')
             .select('*, employees(full_name,department_id), leave_type(name,code)')
-            .order('created_at',{ascending:false})
-            .limit(50)
-
+            .order('created_at',{ascending:false}).limit(50)
         : sb.from('leave_request')
             .select('*, leave_type(name,code)')
             .eq('employee_id', EMP.id)
-            .order('created_at',{ascending:false})
-            .limit(30),
+            .order('created_at',{ascending:false}).limit(30),
 
-    sb.from('leave_type')
-      .select('*')
-      .eq('is_active', true),
-
-    sb.from('holiday_calendar')
-      .select('*')
-      .gte('date', `${yr}-01-01`)
-      .lte('date', `${yr}-12-31`)
-      .order('date'),
-
-    sb.from('departments')
-      .select('*')
-      .eq('is_active', true)
-      .order('name')
-
+    sb.from('leave_type').select('*').eq('is_active', true),
+    sb.from('holiday_calendar').select('*')
+      .gte('date', `${yr}-01-01`).lte('date', `${yr}-12-31`).order('date'),
+    sb.from('departments').select('*').eq('is_active', true).order('name')
   ]);
 
   DATA.balances    = balR.data || [];
@@ -690,7 +586,7 @@ async function loadData() {
   DATA.holidays    = holR.data || [];
   DATA.departments = deptR.data || [];
 
- if (role !== 'staff') {
+  if (role !== 'staff') {
     const { data: emps } = await sb
       .from('employees')
       .select('*')
@@ -707,11 +603,9 @@ async function loadData() {
   }
 
   console.log('DATA LOADED', DATA);
-
 }
-// ═══════════════════════════════════════
-//  LOGIN
-// ═══════════════════════════════════════
+
+// ═══ LOGIN ═══
 async function doSendOTP() {
   const email = document.getElementById('inp-email').value.trim();
   if (!email || !email.includes('@')) { showErr('err-email','Enter a valid email'); return; }
@@ -733,8 +627,10 @@ async function doSendOTP() {
 }
 
 async function doResend() {
-  try { await sb.auth.signInWithOtp({ email:curEmail, options:{shouldCreateUser:false} });
-    toast('Code resent! Check inbox.','ok'); } catch(e) { toast('Failed to resend','err'); }
+  try {
+    await sb.auth.signInWithOtp({ email:curEmail, options:{shouldCreateUser:false} });
+    toast('Code resent! Check inbox.','ok');
+  } catch(e) { toast('Failed to resend','err'); }
 }
 
 function otpIn(el, i) {
@@ -778,12 +674,7 @@ function backToEmail() {
 function showErr(id, msg) { const e = document.getElementById(id); e.textContent = '⚠ '+msg; e.style.display = 'block'; }
 function hideErr(id) { document.getElementById(id).style.display = 'none'; }
 
-
-
-
-// ═══════════════════════════════════════
-//  RENDER APP SHELL
-// ═══════════════════════════════════════
+// ═══ RENDER APP ═══
 function renderApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -794,7 +685,6 @@ function renderApp() {
   document.getElementById('sb-role').textContent = roleLabel(role);
   document.getElementById('role-bar').textContent = roleBanner(role);
   if (role !== 'super_admin') document.getElementById('apply-btn').style.display = 'flex';
-
   buildNav(role);
   nav('dashboard');
 }
@@ -819,14 +709,14 @@ function buildNav(role) {
   ];
   if (role === 'dept_manager' || role === 'operation_admin' || role === 'super_admin') {
     items.push({id:'approvals', ico:'✓', lbl:'Approvals', badge: DATA.requests.filter(r=>r.status==='pending').length||''});
-    items.push({id:'team',      ico:'👥', lbl:'Team'});
+    items.push({id:'team', ico:'👥', lbl:'Team'});
   }
   if (role === 'operation_admin' || role === 'super_admin') {
-    items.push({id:'reports',   ico:'📊', lbl:'Reports'});
-    items.push({id:'calendar',  ico:'📅', lbl:'Calendar'});
+    items.push({id:'reports', ico:'📊', lbl:'Reports'});
+    items.push({id:'calendar', ico:'📅', lbl:'Calendar'});
   }
   if (role === 'super_admin') {
-    items.push({id:'settings',  ico:'⚙',  lbl:'Settings'});
+    items.push({id:'settings', ico:'⚙', lbl:'Settings'});
   }
 
   document.getElementById('sidebar-nav').innerHTML =
@@ -842,9 +732,7 @@ function buildNav(role) {
     </div>`).join('');
 }
 
-// ═══════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════
+// ═══ NAVIGATION ═══
 function nav(id) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.nav===id));
   document.querySelectorAll('.mob-nav-item').forEach(b=>b.classList.toggle('active', b.dataset.mnav===id));
@@ -859,16 +747,13 @@ function nav(id) {
   if (id === 'reports') renderChart();
 }
 
-// ═══════════════════════════════════════
-//  DASHBOARD
-// ═══════════════════════════════════════
+// ═══ DASHBOARD ═══
 function vDashboard() {
   const role = EMP.role;
   const pend = DATA.requests.filter(r=>r.status==='pending').length;
   const appd = DATA.requests.filter(r=>r.status==='approved').length;
   const al   = DATA.balances.find(b=>b.leave_type?.code==='AL');
   const alLeft = al ? (al.entitlement + al.carried_forward - al.used) : '—';
-
   return `
     <div class="stats-row">
       ${role !== 'staff' ? `<div class="stat">
@@ -943,9 +828,7 @@ function renderReqTable(items) {
   </table></div>`;
 }
 
-// ═══════════════════════════════════════
-//  MY LEAVE
-// ═══════════════════════════════════════
+// ═══ MY LEAVE ═══
 function vMyLeave() {
   return `
     <div class="card" style="margin-bottom:18px">
@@ -958,9 +841,7 @@ function vMyLeave() {
     </div>`;
 }
 
-// ═══════════════════════════════════════
-//  APPLY LEAVE
-// ═══════════════════════════════════════
+// ═══ APPLY LEAVE ═══
 function vApply() {
   const opts = DATA.leaveTypes.map(t => {
     const b = DATA.balances.find(x=>x.leave_type_id===t.id);
@@ -1063,9 +944,7 @@ async function submitEarnLeave() {
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══════════════════════════════════════
-//  APPROVALS
-// ═══════════════════════════════════════
+// ═══ APPROVALS ═══
 function vApprovals() {
   const role = EMP.role;
   let pending = DATA.requests.filter(r=>r.status==='pending');
@@ -1111,9 +990,7 @@ async function approve(id, action) {
   } catch(e) { toast('Error: '+e.message,'err'); if(row) row.style.opacity='1'; }
 }
 
-// ═══════════════════════════════════════
-//  TEAM
-// ═══════════════════════════════════════
+// ═══ TEAM ═══
 function vTeam() {
   let emps = DATA.employees;
   if (EMP.role === 'dept_manager') emps = emps.filter(e=>e.department_id===EMP.department_id);
@@ -1142,20 +1019,12 @@ function vTeam() {
   </div>`;
 }
 
-// ═══════════════════════════════════════
-//  REPORTS
-// ═══════════════════════════════════════
+// ═══ REPORTS ═══
 function vReports() {
-  const byType = {};
-  DATA.requests.forEach(r => {
-    const t = r.leave_type?.name||'Other';
-    byType[t] = (byType[t]||0) + (r.total_days||0);
-  });
   const appd = DATA.requests.filter(r=>r.status==='approved').length;
   const pend = DATA.requests.filter(r=>r.status==='pending').length;
   const rejd = DATA.requests.filter(r=>r.status==='rejected').length;
   const totalDays = DATA.requests.filter(r=>r.status==='approved').reduce((s,r)=>s+(r.total_days||0),0);
-
   return `
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
       <button class="report-btn csv" onclick="downloadCSV()">⬇ Download CSV</button>
@@ -1164,10 +1033,8 @@ function vReports() {
     </div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-head"><div class="card-title">Leave by Type</div></div>
-        <div class="card-body" id="chart-area">
-          <div class="chart-wrap" id="chart-container"></div>
-        </div>
+        <div class="card-head"><div class="card-title">Leave by Month</div></div>
+        <div class="card-body"><div class="chart-wrap" id="chart-container"></div></div>
       </div>
       <div class="card">
         <div class="card-head"><div class="card-title">Summary</div></div>
@@ -1203,9 +1070,7 @@ function renderChart() {
   </div>`;
 }
 
-// ═══════════════════════════════════════
-//  CALENDAR
-// ═══════════════════════════════════════
+// ═══ CALENDAR ═══
 function vCalendar() {
   return `<div class="card">
     <div class="card-head"><div class="card-title">Leave Calendar</div></div>
@@ -1231,7 +1096,6 @@ function renderCal() {
   if (!lbl || !grid) return;
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   lbl.textContent = `${monthNames[calMonth]} ${calYear}`;
-
   const holSet = new Set(DATA.holidays.map(h=>h.date));
   const leaveSet = {};
   DATA.requests.filter(r=>r.status==='approved').forEach(r => {
@@ -1243,12 +1107,10 @@ function renderCal() {
       cur.setDate(cur.getDate()+1);
     }
   });
-
   const firstDay = new Date(calYear, calMonth, 1).getDay();
   const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
   const today = new Date().toISOString().split('T')[0];
   const dows = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
   let html = dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
   for (let i=0;i<firstDay;i++) html += '<div class="cal-day other-month"></div>';
   for (let d=1;d<=daysInMonth;d++) {
@@ -1274,9 +1136,7 @@ function changeMonth(dir) {
   renderCal();
 }
 
-// ═══════════════════════════════════════
-//  SETTINGS (super_admin only)
-// ═══════════════════════════════════════
+// ═══ SETTINGS ═══
 function vSettings() {
   const depts = DATA.departments;
   const hols  = DATA.holidays;
@@ -1297,7 +1157,6 @@ function vSettings() {
             : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No departments yet. Add one!</div>'}
           </div>
         </div>
-
         <div class="card">
           <div class="card-head"><div class="card-title">Leave Entitlement</div></div>
           <div class="card-body">
@@ -1305,13 +1164,11 @@ function vSettings() {
               <div class="set-row">
                 <div><div class="set-lbl">${t.name}</div>
                   <div class="set-desc">Code: ${t.code} · ${t.paid_leave?'Paid':'Unpaid'}</div></div>
-                <span style="font-family:var(--mono);font-weight:700;font-size:15px">
-                  ${DATA.leaveTypes.find(x=>x.id===t.id)?.days_per_year||'—'}d</span>
+                <span style="font-family:var(--mono);font-weight:700;font-size:15px">${t.days_per_year||'—'}d</span>
               </div>`).join('')}
           </div>
         </div>
       </div>
-
       <div>
         <div class="card">
           <div class="card-head"><div class="card-title">Public Holidays ${new Date().getFullYear()}</div>
@@ -1326,7 +1183,6 @@ function vSettings() {
             : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No holidays set yet.</div>'}
           </div>
         </div>
-
         <div class="card">
           <div class="card-head"><div class="card-title">WhatsApp Monthly Report</div></div>
           <div class="card-body">
@@ -1334,11 +1190,6 @@ function vSettings() {
               <div><div class="set-lbl">Auto-send on month end</div>
                 <div class="set-desc">Send summary to HR & individual staff</div></div>
               <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
-            </div>
-            <div class="set-row">
-              <div><div class="set-lbl">Send day</div>
-                <div class="set-desc">Last day of each month</div></div>
-              <span style="font-family:var(--mono);font-weight:700">Last day</span>
             </div>
             <div style="margin-top:14px">
               <button class="report-btn wa" onclick="sendWAReport()">📲 Send Report Now</button>
@@ -1349,9 +1200,7 @@ function vSettings() {
     </div>`;
 }
 
-// ═══════════════════════════════════════
-//  CRUD: DEPARTMENTS
-// ═══════════════════════════════════════
+// ═══ CRUD ═══
 async function saveDept() {
   const name = document.getElementById('d-name').value.trim();
   const desc = document.getElementById('d-desc').value.trim();
@@ -1359,8 +1208,7 @@ async function saveDept() {
   try {
     await sb.from('departments').insert({name, description:desc||null});
     toast('✅ Department added!','ok');
-    closeModal('modal-dept');
-    await loadData(); nav('settings');
+    closeModal('modal-dept'); await loadData(); nav('settings');
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
@@ -1372,9 +1220,6 @@ async function deleteDept(id) {
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══════════════════════════════════════
-//  CRUD: HOLIDAYS
-// ═══════════════════════════════════════
 async function saveHoliday() {
   const name = document.getElementById('h-name').value.trim();
   const date = document.getElementById('h-date').value;
@@ -1394,11 +1239,7 @@ async function deleteHoliday(id) {
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══════════════════════════════════════
-//  CRUD: EMPLOYEES
-// ═══════════════════════════════════════
 function openModal(id) {
-  // Populate dept dropdown
   if (id === 'modal-emp') {
     const sel = document.getElementById('m-dept');
     sel.innerHTML = '<option value="">— No Department —</option>' +
@@ -1421,14 +1262,12 @@ async function saveEmployee() {
       full_name:name, email, phone_wa:phone||null, role,
       join_date:join, department_id:dept||null, status:'active'
     });
-    toast('✅ Employee added! Balances auto-created.','ok');
+    toast('✅ Employee added!','ok');
     closeModal('modal-emp'); await loadData(); nav('team');
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══════════════════════════════════════
-//  REPORTS: DOWNLOAD
-// ═══════════════════════════════════════
+// ═══ REPORTS DOWNLOAD ═══
 function downloadCSV() {
   const rows = [['Name','Leave Type','Start Date','End Date','Days','Status','Submitted']];
   DATA.requests.forEach(r => {
@@ -1452,26 +1291,17 @@ function downloadPDF() {
   const yr = new Date().getFullYear();
   const approved = DATA.requests.filter(r=>r.status==='approved');
   const pending  = DATA.requests.filter(r=>r.status==='pending');
-
-  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <title>LeaveOS Report ${yr}</title>
-  <style>
-    body{font-family:Arial,sans-serif;padding:32px;color:#18181b;font-size:13px;}
-    h1{font-size:22px;margin-bottom:4px;}
-    .sub{color:#71717a;margin-bottom:28px;font-size:13px;}
-    .stats{display:flex;gap:20px;margin-bottom:28px;}
-    .stat{background:#f5f4f1;border-radius:10px;padding:16px 20px;flex:1;}
-    .stat-v{font-size:28px;font-weight:700;margin-bottom:2px;}
-    .stat-l{font-size:12px;color:#71717a;}
-    table{width:100%;border-collapse:collapse;margin-top:16px;}
-    th{background:#f5f4f1;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;}
-    td{padding:11px 12px;border-bottom:1px solid #e4e4e7;font-size:13px;}
-    .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-    .approved{background:#eaf2ed;color:#3d7a52;}
-    .pending{background:#fef3e0;color:#c47a1e;}
-    .rejected{background:#fef2f2;color:#dc2626;}
-    @media print{body{padding:0;}}
-  </style></head><body>
+  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LeaveOS Report ${yr}</title>
+  <style>body{font-family:Arial,sans-serif;padding:32px;color:#18181b;font-size:13px;}
+  h1{font-size:22px;margin-bottom:4px;}.sub{color:#71717a;margin-bottom:28px;font-size:13px;}
+  .stats{display:flex;gap:20px;margin-bottom:28px;}.stat{background:#f5f4f1;border-radius:10px;padding:16px 20px;flex:1;}
+  .stat-v{font-size:28px;font-weight:700;margin-bottom:2px;}.stat-l{font-size:12px;color:#71717a;}
+  table{width:100%;border-collapse:collapse;margin-top:16px;}
+  th{background:#f5f4f1;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;}
+  td{padding:11px 12px;border-bottom:1px solid #e4e4e7;font-size:13px;}
+  .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+  .approved{background:#eaf2ed;color:#3d7a52;}.pending{background:#fef3e0;color:#c47a1e;}
+  .rejected{background:#fef2f2;color:#dc2626;}@media print{body{padding:0;}}</style></head><body>
   <h1>🌿 LeaveOS — Leave Report</h1>
   <div class="sub">Generated: ${new Date().toLocaleString('en-MY')} · Year ${yr}</div>
   <div class="stats">
@@ -1479,54 +1309,44 @@ function downloadPDF() {
     <div class="stat"><div class="stat-v" style="color:#c47a1e">${pending.length}</div><div class="stat-l">Pending</div></div>
     <div class="stat"><div class="stat-v" style="color:#1d6fa4">${approved.reduce((s,r)=>s+(r.total_days||0),0)}</div><div class="stat-l">Total Days</div></div>
   </div>
-  <table>
-    <thead><tr><th>Employee</th><th>Leave Type</th><th>Start</th><th>End</th><th>Days</th><th>Status</th></tr></thead>
-    <tbody>${DATA.requests.map(r=>`<tr>
-      <td style="font-weight:600">${r.employees?.full_name||EMP.full_name}</td>
-      <td>${r.leave_type?.name||'—'}</td>
-      <td style="font-family:monospace">${r.start_date}</td>
-      <td style="font-family:monospace">${r.end_date}</td>
-      <td style="font-family:monospace;font-weight:700">${r.total_days}</td>
-      <td><span class="badge ${r.status}">${r.status}</span></td>
-    </tr>`).join('')}
-    </tbody>
-  </table>
-  <script>window.onload=()=>{window.print();}<\/script>
-  </body></html>`;
-
+  <table><thead><tr><th>Employee</th><th>Leave Type</th><th>Start</th><th>End</th><th>Days</th><th>Status</th></tr></thead>
+  <tbody>${DATA.requests.map(r=>`<tr>
+    <td style="font-weight:600">${r.employees?.full_name||EMP.full_name}</td>
+    <td>${r.leave_type?.name||'—'}</td>
+    <td style="font-family:monospace">${r.start_date}</td>
+    <td style="font-family:monospace">${r.end_date}</td>
+    <td style="font-family:monospace;font-weight:700">${r.total_days}</td>
+    <td><span class="badge ${r.status}">${r.status}</span></td>
+  </tr>`).join('')}</tbody></table>
+  <script>window.onload=()=>{window.print();}<\/script></body></html>`;
   const w = window.open('','_blank');
   w.document.write(html); w.document.close();
   toast('✅ PDF ready to print/save!','ok');
 }
 
-// ═══════════════════════════════════════
-//  WHATSAPP REPORT
-// ═══════════════════════════════════════
 function sendWAReport() {
   const yr = new Date().getFullYear();
   const mo = new Date().toLocaleString('en-MY',{month:'long'});
   const approved = DATA.requests.filter(r=>r.status==='approved').length;
   const pending  = DATA.requests.filter(r=>r.status==='pending').length;
   const days     = DATA.requests.filter(r=>r.status==='approved').reduce((s,r)=>s+(r.total_days||0),0);
-
   const msg = encodeURIComponent(
     `🌿 *LeaveOS Monthly Report — ${mo} ${yr}*\n\n` +
     `✅ Approved: ${approved} requests\n` +
     `⏳ Pending: ${pending} requests\n` +
     `📅 Total days taken: ${days} days\n\n` +
-    `View full report: leaveos.vercel.app\n\n` +
     `_Auto-generated by LeaveOS_`
   );
   window.open(`https://wa.me/?text=${msg}`, '_blank');
   toast('📲 Opening WhatsApp...','ok');
 }
 
-// ═══════════════════════════════════════
-//  AUTH
-// ═══════════════════════════════════════
+// ═══ AUTH ═══
 async function doLogout() {
+  booting = false;
   await sb.auth.signOut();
   ME = null; EMP = null;
+  DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
   document.getElementById('app').style.display = 'none';
   showLogin();
   document.getElementById('step-otp').classList.remove('active');
@@ -1541,23 +1361,17 @@ function showLogin() {
   document.getElementById('app').style.display = 'none';
 }
 
-// ═══════════════════════════════════════
-//  SIDEBAR
-// ═══════════════════════════════════════
+// ═══ SIDEBAR ═══
 function toggleSidebar() {
-  const sb = document.getElementById('sidebar');
-  const ov = document.getElementById('overlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('show');
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
 }
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
 }
 
-// ═══════════════════════════════════════
-//  UTILITIES
-// ═══════════════════════════════════════
+// ═══ UTILITIES ═══
 function loading(txt) {
   const el = document.getElementById('loading');
   if (txt === false) { el.style.display='none'; return; }
