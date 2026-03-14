@@ -569,18 +569,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    await bootApp(session.user);
-    return;
-  }
-
+  // 先设置监听器
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session && !booting) {
       await bootApp(session.user);
     }
     if (event === 'SIGNED_OUT') showLogin();
   });
+
+  // 再检查现有 session
+  const { data: { session } } = await sb.auth.getSession();
+  if (session && !booting) {
+    await bootApp(session.user);
+  }
 });
 
 // ═══════════════════════════════════════
@@ -588,13 +589,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ═══════════════════════════════════════
 async function bootApp(user) {
   if (booting) return;
-  booting = true;
+  booting = true;          // 锁上，永远不解锁（登录一次就够了）
   loading('Loading your profile...');
   ME = user;
 
   try {
-    console.log('LOGIN USER', user.email);
-
     const { data, error } = await sb
       .from('employees')
       .select('*')
@@ -604,9 +603,9 @@ async function bootApp(user) {
     if (error) throw error;
 
     const emp = data?.[0];
-    console.log('EMPLOYEE', emp);
 
     if (!emp) {
+      booting = false;     // 失败才解锁，允许重试
       showLogin();
       toast('Email not registered. Contact HR.', 'err');
       await sb.auth.signOut();
@@ -629,15 +628,16 @@ async function bootApp(user) {
     renderApp();
 
   } catch (e) {
+    booting = false;       // 出错才解锁
     console.error('BOOT ERROR', e);
     toast('Error: ' + e.message, 'err');
   } finally {
     loading(false);
-    booting = false;
+    // ← 注意：这里不重置 booting！
   }
 }
 
-   async function loadData() {
+async function loadData() {
 
   const yr = new Date().getFullYear();
   const role = EMP.role;
