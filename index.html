@@ -602,7 +602,7 @@ async function bootApp(user) {
 
     const { data, error } = await sb
       .from('employees')
-      .select('*, departments(name)')
+      .select('*, departments!employees_department_id_fkey(name)')
       .ilike('email', user.email.trim())
       .limit(1);
 
@@ -716,7 +716,7 @@ async function bootApp(user) {
 
     const { data, error } = await sb
       .from('employees')
-      .select('*, departments(name)')
+      .select('*, departments!employees_department_id_fkey(name)')
       .ilike('email', user.email.trim())
       .limit(1);
 
@@ -810,11 +810,10 @@ async function loadData() {
   if (role !== 'staff') {
 
     const { data: emps } = await sb
-      .from('employees')
-      .select('*, departments(name)')
-      .eq('is_active', true)
-      .order('full_name');
-
+     .from('employees')
+     .select('*, departments!employees_department_id_fkey(name)')
+     .eq('is_active', true)
+     .order('full_name');
     DATA.employees = emps || [];
 
   }
