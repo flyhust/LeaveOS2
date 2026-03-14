@@ -681,9 +681,9 @@ async function bootApp(user) {
       return;
     }
 
-    const { data: emp, error } = await sb
+const { data: emp, error } = await sb
   .from('employees')
-  .select('*')
+  .select('*, departments(name)')
   .eq('email', email)
   .single();
 
