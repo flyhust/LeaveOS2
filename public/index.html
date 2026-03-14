@@ -665,7 +665,7 @@ async function bootApp(user) {
     const email = user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email;
     console.log('Auth email detected:', email);
     if (!email) { loading(false); showLogin(); toast('Could not detect email. Try again.','err'); await sb.auth.signOut(); return; }
-    const {data:emp, error} = await sb.from('employees').select('*, departments!employees_department_fkey(name)')
+    const {data:emp, error} = await sb.from('employees').select('*, departments!employees_department_id_fkey(name)')
       .eq('email', email).single();
     console.log('Employee lookup:', emp, error);
     if (error || !emp) { loading(false); showLogin(); toast('Email not registered. Contact HR.','err'); await sb.auth.signOut(); return; }
