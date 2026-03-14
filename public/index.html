@@ -560,10 +560,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
 const SUPABASE_URL = 'https://zmbethwexdcqpvqhescl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
- auth: {
-  persistSession: true,
-  autoRefreshToken: true
-}
+  auth: { persistSession: false }
 });
 
 // ═══════════════════════════════════════
@@ -664,51 +661,21 @@ function hideErr(id) { document.getElementById(id).style.display = 'none'; }
 async function bootApp(user) {
   loading('Loading your profile...');
   ME = user;
-
   try {
-
-    const email = (user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email || '')
-      .toLowerCase()
-      .trim();
-
+    const email = user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email;
     console.log('Auth email detected:', email);
-
-    if (!email) {
-      loading(false);
-      showLogin();
-      toast('Could not detect email. Try again.','err');
-      await sb.auth.signOut();
-      return;
-    }
-
-const { data: emp, error } = await sb
-  .from('employees')
-  .select('*, departments(name)')
-  .eq('email', email)
-  .single();
-
+    if (!email) { loading(false); showLogin(); toast('Could not detect email. Try again.','err'); await sb.auth.signOut(); return; }
+    const {data:emp, error} = await sb.from('employees').select('*, departments(name)')
+      .eq('email', email).single();
     console.log('Employee lookup:', emp, error);
-
-    if (error || !emp) {
-      loading(false);
-      showLogin();
-      toast('Email not registered. Contact HR.','err');
-      await sb.auth.signOut();
-      return;
-    }
-
+    if (error || !emp) { loading(false); showLogin(); toast('Email not registered. Contact HR.','err'); await sb.auth.signOut(); return; }
     EMP = emp;
-
     await loadData();
     renderApp();
-
     loading(false);
-
-  } catch(e) {
-    loading(false);
-    toast('Error: '+e.message,'err');
-  }
+  } catch(e) { loading(false); toast('Error: '+e.message,'err'); }
 }
+
 async function loadData() {
   const yr = new Date().getFullYear();
   const role = EMP.role;
