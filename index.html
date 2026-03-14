@@ -658,7 +658,7 @@ async function bootApp(user) {
 
     const { data, error } = await sb
       .from('employees')
-      .select('*')
+      .select('*, departments(name)')
       .ilike('email', user.email.trim())
       .limit(1);
 
