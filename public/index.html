@@ -682,10 +682,10 @@ async function bootApp(user) {
     }
 
     const { data: emp, error } = await sb
-      .from('employees')
-      .select('*, departments(name)')
-      .ilike('email', email)
-      .single();
+  .from('employees')
+  .select('*')
+  .eq('email', email)
+  .single();
 
     console.log('Employee lookup:', emp, error);
 
