@@ -29,137 +29,92 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:20px;background:var(--bg);
-  background-image:radial-gradient(circle at 15% 15%,rgba(61,122,82,0.08) 0%,transparent 50%),
-  radial-gradient(circle at 85% 85%,rgba(29,111,164,0.06) 0%,transparent 50%);}
-.login-card{background:var(--white);border:1px solid var(--border);border-radius:20px;
-  padding:36px 32px;width:100%;max-width:400px;box-shadow:var(--shadow-lg);
-  animation:slideUp .4s cubic-bezier(.16,1,.3,1);}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);background-image:radial-gradient(circle at 15% 15%,rgba(61,122,82,0.08) 0%,transparent 50%),radial-gradient(circle at 85% 85%,rgba(29,111,164,0.06) 0%,transparent 50%);}
+.login-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px 32px;width:100%;max-width:400px;box-shadow:var(--shadow-lg);animation:slideUp .4s cubic-bezier(.16,1,.3,1);}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .login-brand{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
-.login-brand-icon{width:44px;height:44px;background:var(--sage);border-radius:12px;
-  display:flex;align-items:center;justify-content:center;font-size:22px;}
+.login-brand-icon{width:44px;height:44px;background:var(--sage);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
 .login-brand-name{font-size:22px;font-weight:800;letter-spacing:-0.5px;}
 .login-brand-sub{font-size:10px;color:var(--ink3);letter-spacing:2px;font-weight:600;margin-top:1px;}
 .login-title{font-size:20px;font-weight:700;margin-bottom:6px;}
 .login-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;line-height:1.5;}
 .field{margin-bottom:16px;}
 .field-label{font-size:12px;font-weight:700;color:var(--ink2);display:block;margin-bottom:7px;letter-spacing:.3px;}
-.field-input{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  font-size:15px;font-family:var(--font);background:var(--white);color:var(--ink);
-  outline:none;transition:all .15s;}
+.field-input{width:100%;padding:13px 15px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font);background:var(--white);color:var(--ink);outline:none;transition:all .15s;}
 .field-input:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(61,122,82,.1);}
 .field-input::placeholder{color:var(--ink3);}
-.btn-primary{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);
-  background:var(--sage);color:#fff;font-size:15px;font-weight:700;
-  font-family:var(--font);cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-primary{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:#fff;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .btn-primary:hover{background:#2d6b42;transform:translateY(-1px);box-shadow:0 4px 16px rgba(61,122,82,.3);}
 .btn-primary:disabled{background:var(--sage-m);cursor:not-allowed;transform:none;box-shadow:none;}
-.btn-ghost{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  background:none;color:var(--ink2);font-size:14px;font-weight:600;
-  font-family:var(--font);cursor:pointer;transition:all .15s;margin-top:10px;}
+.btn-ghost{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:none;color:var(--ink2);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .15s;margin-top:10px;}
 .btn-ghost:hover{border-color:var(--ink3);color:var(--ink);}
 .otp-row{display:flex;gap:8px;margin-bottom:16px;}
-.otp-box{flex:1;text-align:center;padding:16px 4px;border:1.5px solid var(--border);
-  border-radius:var(--radius-sm);font-size:22px;font-weight:700;font-family:var(--mono);
-  outline:none;transition:all .15s;background:var(--white);}
+.otp-box{flex:1;text-align:center;padding:16px 4px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:22px;font-weight:700;font-family:var(--mono);outline:none;transition:all .15s;background:var(--white);}
 .otp-box:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(61,122,82,.1);}
 .login-step{display:none;}
 .login-step.active{display:block;}
-.alert-info{background:var(--sage-l);border:1px solid var(--sage-m);border-radius:var(--radius-sm);
-  padding:12px 14px;font-size:13px;color:var(--sage);margin-bottom:18px;
-  display:flex;gap:8px;align-items:flex-start;}
-.alert-error{background:var(--rose-l);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-xs);
-  padding:10px 13px;font-size:13px;color:var(--rose);margin-bottom:14px;display:none;}
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:inline-block;}
+.alert-info{background:var(--sage-l);border:1px solid var(--sage-m);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--sage);margin-bottom:18px;display:flex;gap:8px;align-items:flex-start;}
+.alert-error{background:var(--rose-l);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-xs);padding:10px 13px;font-size:13px;color:var(--rose);margin-bottom:14px;display:none;}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:inline-block;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .resend{text-align:center;font-size:13px;color:var(--ink3);margin-top:14px;}
 .resend span{color:var(--sage);cursor:pointer;font-weight:600;}
 #app{display:none;}
 .app-wrap{display:flex;min-height:100vh;}
-.sidebar{width:256px;background:var(--ink);display:flex;flex-direction:column;
-  position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.sidebar{width:256px;background:var(--ink);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s cubic-bezier(.16,1,.3,1);}
 .sidebar-head{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,.07);}
 .brand{display:flex;align-items:center;gap:10px;}
-.brand-icon{width:32px;height:32px;background:var(--sage);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;font-size:16px;}
+.brand-icon{width:32px;height:32px;background:var(--sage);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .brand-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
 .brand-ver{font-size:9px;color:rgba(255,255,255,.2);letter-spacing:2px;margin-top:1px;}
 .sidebar-nav{padding:12px 10px;flex:1;overflow-y:auto;}
-.nav-section{font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.18);
-  padding:0 10px;margin:14px 0 4px;font-weight:700;text-transform:uppercase;}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;
-  color:rgba(255,255,255,.4);cursor:pointer;font-size:14px;font-weight:500;
-  transition:all .15s;margin-bottom:1px;border:none;background:none;
-  width:100%;text-align:left;font-family:var(--font);}
+.nav-section{font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.18);padding:0 10px;margin:14px 0 4px;font-weight:700;text-transform:uppercase;}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:rgba(255,255,255,.4);cursor:pointer;font-size:14px;font-weight:500;transition:all .15s;margin-bottom:1px;border:none;background:none;width:100%;text-align:left;font-family:var(--font);}
 .nav-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);}
 .nav-btn.active{background:var(--sage);color:#fff;}
 .nav-ico{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
-.nav-badge{margin-left:auto;background:var(--amber);color:#fff;
-  font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:var(--mono);}
-.sidebar-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;gap:10px;}
-.user-av{width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--sage),var(--sky));
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:var(--amber);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;font-family:var(--mono);}
+.sidebar-foot{padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;}
+.user-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--sky));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
 .user-name{font-size:13px;font-weight:600;color:#fff;line-height:1.2;}
 .user-role{font-size:10px;color:rgba(255,255,255,.3);margin-top:1px;}
-.logout-btn{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.25);
-  cursor:pointer;font-size:18px;padding:4px;border-radius:4px;transition:color .15s;}
+.logout-btn{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.25);cursor:pointer;font-size:18px;padding:4px;border-radius:4px;transition:color .15s;}
 .logout-btn:hover{color:var(--rose);}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190;
-  backdrop-filter:blur(2px);}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190;backdrop-filter:blur(2px);}
 .sidebar-overlay.show{display:block;}
 .main{margin-left:256px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
-.topbar{background:var(--white);border-bottom:1px solid var(--border);
-  padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .topbar-left{display:flex;align-items:center;gap:14px;}
-.menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;
-  color:var(--ink2);padding:4px;border-radius:6px;}
+.menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink2);padding:4px;border-radius:6px;}
 .page-title{font-size:17px;font-weight:700;}
 .page-date{font-size:11px;color:var(--ink3);font-family:var(--mono);}
 .topbar-right{display:flex;align-items:center;gap:10px;}
-.top-btn{display:flex;align-items:center;gap:6px;background:var(--sage);color:#fff;
-  border:none;border-radius:var(--radius-sm);padding:9px 18px;
-  font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;}
+.top-btn{display:flex;align-items:center;gap:6px;background:var(--sage);color:#fff;border:none;border-radius:var(--radius-sm);padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s;}
 .top-btn:hover{background:#2d6b42;}
-.notif-btn{width:36px;height:36px;border-radius:var(--radius-sm);
-  background:var(--bg);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative;}
-.notif-dot{position:absolute;top:7px;right:7px;width:6px;height:6px;
-  border-radius:50%;background:var(--rose);border:1.5px solid var(--white);}
-.role-bar{background:var(--ink);color:rgba(255,255,255,.45);text-align:center;
-  font-size:11px;padding:5px;font-family:var(--mono);letter-spacing:.5px;}
+.notif-btn{width:36px;height:36px;border-radius:var(--radius-sm);background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative;}
+.notif-dot{position:absolute;top:7px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--rose);border:1.5px solid var(--white);}
+.role-bar{background:var(--ink);color:rgba(255,255,255,.45);text-align:center;font-size:11px;padding:5px;font-family:var(--mono);letter-spacing:.5px;}
 .content{padding:24px;flex:1;}
 .view{display:none;}
 .view.active{display:block;animation:fadeIn .2s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
-.stat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
-  padding:18px 20px;box-shadow:var(--shadow);transition:all .2s;cursor:default;}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);transition:all .2s;cursor:default;}
 .stat:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .stat-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;}
 .stat-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;}
 .stat-val{font-size:30px;font-weight:800;font-family:var(--mono);line-height:1;margin-bottom:4px;}
 .stat-lbl{font-size:12px;color:var(--ink3);font-weight:500;}
-.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;}
 .card-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 0;}
 .card-title{font-size:14px;font-weight:700;}
-.card-act{font-size:12px;color:var(--sage);font-weight:700;cursor:pointer;
-  padding:5px 10px;border-radius:var(--radius-xs);transition:background .15s;}
+.card-act{font-size:12px;color:var(--sage);font-weight:700;cursor:pointer;padding:5px 10px;border-radius:var(--radius-xs);transition:background .15s;}
 .card-act:hover{background:var(--sage-l);}
 .card-body{padding:16px 20px 20px;}
 .bal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px 20px 20px;}
 .bal-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:15px;}
-.bal-type{font-size:10px;font-weight:700;color:var(--ink3);letter-spacing:.8px;
-  text-transform:uppercase;margin-bottom:8px;}
+.bal-type{font-size:10px;font-weight:700;color:var(--ink3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;}
 .bal-nums{display:flex;align-items:baseline;gap:4px;margin-bottom:10px;}
 .bal-used{font-size:24px;font-weight:800;font-family:var(--mono);}
 .bal-total{font-size:13px;color:var(--ink3);font-family:var(--mono);}
@@ -168,14 +123,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:10
 .bal-rem{font-size:11px;color:var(--ink3);margin-top:5px;}
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
-th{background:var(--bg);padding:10px 16px;text-align:left;font-size:11px;
-  font-weight:700;color:var(--ink3);letter-spacing:.8px;text-transform:uppercase;
-  border-bottom:1px solid var(--border);white-space:nowrap;}
+th{background:var(--bg);padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--ink3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap;}
 td{padding:13px 16px;border-bottom:1px solid rgba(228,228,231,.5);font-size:14px;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(245,244,241,.6);}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
-  padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
 .badge-approved,.badge-active{background:var(--sage-l);color:var(--sage);}
 .badge-pending{background:var(--amber-l);color:var(--amber);}
 .badge-rejected,.badge-resigned{background:var(--rose-l);color:var(--rose);}
@@ -183,58 +135,43 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .badge-purple{background:var(--purple-l);color:var(--purple);}
 .badge-grey{background:var(--bg2);color:var(--ink3);}
 .pend-list{padding:4px 0 16px;}
-.pend-item{display:flex;align-items:center;gap:14px;padding:14px 20px;
-  border-bottom:1px solid rgba(228,228,231,.5);transition:background .15s;}
+.pend-item{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid rgba(228,228,231,.5);transition:background .15s;}
 .pend-item:hover{background:var(--bg);}
 .pend-item:last-child{border-bottom:none;}
-.pend-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.pend-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
 .pend-info{flex:1;min-width:0;}
 .pend-name{font-size:14px;font-weight:700;margin-bottom:2px;}
 .pend-det{font-size:12px;color:var(--ink3);}
 .pend-days{font-family:var(--mono);font-size:16px;font-weight:700;flex-shrink:0;}
 .pend-acts{display:flex;gap:6px;flex-shrink:0;}
-.act-btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:700;
-  border:none;cursor:pointer;font-family:var(--font);transition:all .15s;}
+.act-btn{padding:7px 14px;border-radius:7px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:all .15s;}
 .btn-ok{background:var(--sage-l);color:var(--sage);}
 .btn-ok:hover{background:var(--sage);color:#fff;}
 .btn-no{background:var(--rose-l);color:var(--rose);}
 .btn-no:hover{background:var(--rose);color:#fff;}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 .form-row{margin-bottom:15px;}
 .form-lbl{font-size:12px;font-weight:700;color:var(--ink2);display:block;margin-bottom:6px;}
-.form-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  font-size:14px;font-family:var(--font);background:var(--white);color:var(--ink);outline:none;transition:border .15s;}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font);background:var(--white);color:var(--ink);outline:none;transition:border .15s;}
 .form-input:focus{border-color:var(--sage);}
-.form-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  font-size:14px;font-family:var(--font);background:var(--white);color:var(--ink);outline:none;cursor:pointer;}
+.form-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font);background:var(--white);color:var(--ink);outline:none;cursor:pointer;}
 .form-select:focus{border-color:var(--sage);}
-.form-textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  font-size:14px;font-family:var(--font);resize:vertical;min-height:80px;outline:none;}
+.form-textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font);resize:vertical;min-height:80px;outline:none;}
 .form-textarea:focus{border-color:var(--sage);}
 .date-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.days-box{background:var(--sage-l);border:1px solid var(--sage-m);border-radius:var(--radius-sm);
-  padding:12px 15px;font-size:14px;font-weight:600;color:var(--sage);
-  display:none;align-items:center;gap:8px;margin:4px 0 14px;}
-.warn-box{background:var(--rose-l);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-sm);
-  padding:11px 14px;margin-bottom:14px;font-size:13px;color:var(--rose);display:none;}
-.submit-btn{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);background:var(--sage);
-  color:#fff;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;
-  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.days-box{background:var(--sage-l);border:1px solid var(--sage-m);border-radius:var(--radius-sm);padding:12px 15px;font-size:14px;font-weight:600;color:var(--sage);display:none;align-items:center;gap:8px;margin:4px 0 14px;}
+.warn-box{background:var(--rose-l);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:14px;font-size:13px;color:var(--rose);display:none;}
+.submit-btn{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);background:var(--sage);color:#fff;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .submit-btn:hover{background:#2d6b42;transform:translateY(-1px);}
 .submit-btn:disabled{background:var(--sage-m);cursor:not-allowed;transform:none;}
 .cal-wrap{padding:16px 20px 20px;}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .cal-month{font-size:16px;font-weight:700;}
-.cal-arrow{background:none;border:1px solid var(--border);border-radius:var(--radius-xs);
-  width:32px;height:32px;cursor:pointer;font-size:14px;transition:all .15s;}
+.cal-arrow{background:none;border:1px solid var(--border);border-radius:var(--radius-xs);width:32px;height:32px;cursor:pointer;font-size:14px;transition:all .15s;}
 .cal-arrow:hover{background:var(--bg2);}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
 .cal-dow{text-align:center;font-size:10px;font-weight:700;color:var(--ink3);padding:6px 0;letter-spacing:.5px;}
-.cal-day{text-align:center;padding:6px 3px;border-radius:6px;font-size:13px;
-  font-weight:500;cursor:default;position:relative;min-height:36px;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;}
+.cal-day{text-align:center;padding:6px 3px;border-radius:6px;font-size:13px;font-weight:500;cursor:default;min-height:36px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;}
 .cal-day.other-month{color:var(--ink3);}
 .cal-day.today{background:var(--sage-l);font-weight:700;color:var(--sage);}
 .cal-day.holiday{background:var(--rose-l);}
@@ -249,57 +186,39 @@ tr:hover td{background:rgba(245,244,241,.6);}
 .chart-bar{width:100%;border-radius:5px 5px 0 0;transition:height .6s cubic-bezier(.4,0,.2,1);min-height:4px;}
 .chart-lbl{font-size:10px;color:var(--ink3);text-align:center;font-weight:600;}
 .chart-val{font-size:10px;font-weight:700;font-family:var(--mono);}
-.toggle{width:42px;height:24px;border-radius:12px;cursor:pointer;position:relative;
-  transition:background .2s;flex-shrink:0;border:none;}
+.toggle{width:42px;height:24px;border-radius:12px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;}
 .toggle.on{background:var(--sage);}
 .toggle.off{background:var(--border2);}
-.toggle::after{content:'';position:absolute;top:4px;width:16px;height:16px;
-  border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+.toggle::after{content:'';position:absolute;top:4px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
 .toggle.on::after{left:22px;}
 .toggle.off::after{left:4px;}
-.set-row{display:flex;align-items:center;justify-content:space-between;
-  padding:14px 0;border-bottom:1px solid rgba(228,228,231,.5);}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(228,228,231,.5);}
 .set-row:last-child{border-bottom:none;}
 .set-lbl{font-size:14px;font-weight:600;}
 .set-desc{font-size:12px;color:var(--ink3);margin-top:2px;}
-.loading-wrap{position:fixed;inset:0;background:rgba(245,244,241,.88);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:999;gap:16px;backdrop-filter:blur(4px);}
-.loading-ring{width:44px;height:44px;border:3px solid var(--border);
-  border-top-color:var(--sage);border-radius:50%;animation:spin .8s linear infinite;}
+.loading-wrap{position:fixed;inset:0;background:rgba(245,244,241,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;backdrop-filter:blur(4px);}
+.loading-ring{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--sage);border-radius:50%;animation:spin .8s linear infinite;}
 .loading-txt{font-size:14px;font-weight:600;color:var(--ink3);}
 .empty{text-align:center;padding:56px 24px;color:var(--ink3);}
 .empty-ico{font-size:44px;margin-bottom:14px;}
 .empty-ttl{font-size:15px;font-weight:700;color:var(--ink2);margin-bottom:4px;}
 .empty-sub{font-size:13px;}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;
-  font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);
-  opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.ok{background:var(--sage);}
 .toast.err{background:var(--rose);}
-.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;
-  background:var(--white);border-top:1px solid var(--border);z-index:150;
-  padding-bottom:env(safe-area-inset-bottom);}
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);z-index:150;padding-bottom:env(safe-area-inset-bottom);}
 .mob-nav-items{display:flex;}
-.mob-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:10px 4px 8px;font-size:10px;font-weight:600;color:var(--ink3);cursor:pointer;}
+.mob-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px 8px;font-size:10px;font-weight:600;color:var(--ink3);cursor:pointer;}
 .mob-nav-item.active{color:var(--sage);}
 .mob-nav-ico{font-size:20px;}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;
-  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
 .modal-bg.show{display:flex;}
-.modal{background:var(--white);border-radius:var(--radius);padding:28px;
-  width:100%;max-width:480px;box-shadow:var(--shadow-lg);
-  animation:slideUp .3s cubic-bezier(.16,1,.3,1);}
-.modal-title{font-size:17px;font-weight:700;margin-bottom:20px;display:flex;
-  align-items:center;justify-content:space-between;}
+.modal{background:var(--white);border-radius:var(--radius);padding:28px;width:100%;max-width:480px;box-shadow:var(--shadow-lg);animation:slideUp .3s cubic-bezier(.16,1,.3,1);}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;}
 .modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink3);}
-.emp-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
-.report-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--radius-sm);
-  font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:all .15s;}
+.emp-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.report-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--font);transition:all .15s;}
 .report-btn.csv{background:var(--sage-l);color:var(--sage);}
 .report-btn.csv:hover{background:var(--sage);color:#fff;}
 .report-btn.pdf{background:var(--rose-l);color:var(--rose);}
@@ -317,7 +236,6 @@ tr:hover td{background:rgba(245,244,241,.6);}
   .stat-val{font-size:24px;}
   .bal-grid{grid-template-columns:1fr;gap:10px;}
   .grid-2{grid-template-columns:1fr;}
-  .grid-3{grid-template-columns:1fr;}
   .date-row{grid-template-columns:1fr;}
   .topbar{padding:0 14px;}
   .pend-acts{flex-direction:column;}
@@ -343,8 +261,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
       <div class="alert-error" id="err-email"></div>
       <div class="field">
         <label class="field-label">WORK EMAIL</label>
-        <input class="field-input" id="inp-email" type="email" placeholder="you@company.com"
-          onkeydown="if(event.key==='Enter')doSendOTP()">
+        <input class="field-input" id="inp-email" type="email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')doSendOTP()">
       </div>
       <button class="btn-primary" id="btn-send" onclick="doSendOTP()">Send Sign-in Code</button>
       <div style="text-align:center;font-size:12px;color:var(--ink3);margin-top:14px">🔒 Secure · No password needed</div>
@@ -381,19 +298,13 @@ tr:hover td{background:rgba(245,244,241,.6);}
       <div class="sidebar-head">
         <div class="brand">
           <div class="brand-icon">🌿</div>
-          <div>
-            <div class="brand-name">LeaveOS</div>
-            <div class="brand-ver">V2.0</div>
-          </div>
+          <div><div class="brand-name">LeaveOS</div><div class="brand-ver">V2.0</div></div>
         </div>
       </div>
       <div class="sidebar-nav" id="sidebar-nav"></div>
       <div class="sidebar-foot">
         <div class="user-av" id="sb-av">?</div>
-        <div>
-          <div class="user-name" id="sb-name">—</div>
-          <div class="user-role" id="sb-role">—</div>
-        </div>
+        <div><div class="user-name" id="sb-name">—</div><div class="user-role" id="sb-role">—</div></div>
         <button class="logout-btn" onclick="doLogout()" title="Sign out">⎋</button>
       </div>
     </div>
@@ -401,10 +312,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
       <div class="topbar">
         <div class="topbar-left">
           <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-          <div>
-            <div class="page-title" id="page-title">Dashboard</div>
-            <div class="page-date" id="page-date"></div>
-          </div>
+          <div><div class="page-title" id="page-title">Dashboard</div><div class="page-date" id="page-date"></div></div>
         </div>
         <div class="topbar-right">
           <div class="notif-btn"><div class="notif-dot"></div>🔔</div>
@@ -415,30 +323,22 @@ tr:hover td{background:rgba(245,244,241,.6);}
       <div class="content" id="content"></div>
     </div>
   </div>
-  <div class="mob-nav" id="mob-nav">
-    <div class="mob-nav-items" id="mob-nav-items"></div>
-  </div>
+  <div class="mob-nav" id="mob-nav"><div class="mob-nav-items" id="mob-nav-items"></div></div>
 </div>
 
 <div class="modal-bg" id="modal-emp">
   <div class="modal">
     <div class="modal-title">Add Employee <button class="modal-close" onclick="closeModal('modal-emp')">×</button></div>
-    <div class="form-row"><label class="form-lbl">FULL NAME</label>
-      <input class="form-input" id="m-name" placeholder="Ahmad bin Ali"></div>
-    <div class="form-row"><label class="form-lbl">EMAIL</label>
-      <input class="form-input" id="m-email" type="email" placeholder="ahmad@company.com"></div>
-    <div class="form-row"><label class="form-lbl">PHONE (WhatsApp)</label>
-      <input class="form-input" id="m-phone" placeholder="+60123456789"></div>
+    <div class="form-row"><label class="form-lbl">FULL NAME</label><input class="form-input" id="m-name" placeholder="Ahmad bin Ali"></div>
+    <div class="form-row"><label class="form-lbl">EMAIL</label><input class="form-input" id="m-email" type="email" placeholder="ahmad@company.com"></div>
+    <div class="form-row"><label class="form-lbl">PHONE (WhatsApp)</label><input class="form-input" id="m-phone" placeholder="+60123456789"></div>
     <div class="date-row">
       <div class="form-row"><label class="form-lbl">ROLE</label>
         <select class="form-select" id="m-role">
-          <option value="staff">Staff</option>
-          <option value="dept_manager">Dept Manager</option>
-          <option value="operation_admin">Operation Admin</option>
-          <option value="super_admin">Super Admin</option>
+          <option value="staff">Staff</option><option value="dept_manager">Dept Manager</option>
+          <option value="operation_admin">Operation Admin</option><option value="super_admin">Super Admin</option>
         </select></div>
-      <div class="form-row"><label class="form-lbl">JOIN DATE</label>
-        <input class="form-input" type="date" id="m-join"></div>
+      <div class="form-row"><label class="form-lbl">JOIN DATE</label><input class="form-input" type="date" id="m-join"></div>
     </div>
     <div class="form-row"><label class="form-lbl">DEPARTMENT</label>
       <select class="form-select" id="m-dept"><option value="">— No Department —</option></select></div>
@@ -449,10 +349,8 @@ tr:hover td{background:rgba(245,244,241,.6);}
 <div class="modal-bg" id="modal-dept">
   <div class="modal">
     <div class="modal-title">Add Department <button class="modal-close" onclick="closeModal('modal-dept')">×</button></div>
-    <div class="form-row"><label class="form-lbl">DEPARTMENT NAME</label>
-      <input class="form-input" id="d-name" placeholder="e.g. Marketing"></div>
-    <div class="form-row"><label class="form-lbl">DESCRIPTION (optional)</label>
-      <input class="form-input" id="d-desc" placeholder="What this department does"></div>
+    <div class="form-row"><label class="form-lbl">DEPARTMENT NAME</label><input class="form-input" id="d-name" placeholder="e.g. Marketing"></div>
+    <div class="form-row"><label class="form-lbl">DESCRIPTION (optional)</label><input class="form-input" id="d-desc" placeholder="What this department does"></div>
     <button class="submit-btn" onclick="saveDept()">Save Department</button>
   </div>
 </div>
@@ -460,10 +358,8 @@ tr:hover td{background:rgba(245,244,241,.6);}
 <div class="modal-bg" id="modal-hol">
   <div class="modal">
     <div class="modal-title">Add Public Holiday <button class="modal-close" onclick="closeModal('modal-hol')">×</button></div>
-    <div class="form-row"><label class="form-lbl">HOLIDAY NAME</label>
-      <input class="form-input" id="h-name" placeholder="e.g. Hari Raya Aidilfitri"></div>
-    <div class="form-row"><label class="form-lbl">DATE</label>
-      <input class="form-input" type="date" id="h-date"></div>
+    <div class="form-row"><label class="form-lbl">HOLIDAY NAME</label><input class="form-input" id="h-name" placeholder="e.g. Hari Raya Aidilfitri"></div>
+    <div class="form-row"><label class="form-lbl">DATE</label><input class="form-input" type="date" id="h-date"></div>
     <button class="submit-btn" onclick="saveHoliday()">Save Holiday</button>
   </div>
 </div>
@@ -479,45 +375,42 @@ let ME = null, EMP = null;
 let DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
 let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
 let curEmail = '';
-let booting = false;
-let booted = false;  // 成功启动后才设为 true
+let appReady = false; // 唯一标志
 
 // ═══ INIT ═══
 document.addEventListener('DOMContentLoaded', async () => {
-  document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',
-    {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  // 监听器一直开着（处理新登录）
+  // 同时处理 refresh 和新登录
+  // onAuthStateChange 会在页面加载时触发 INITIAL_SESSION（有session时）或等待 SIGNED_IN（无session时）
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
+    console.log('AUTH EVENT:', event, !!session);
+    if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session && !appReady) {
       await bootApp(session.user);
     }
-    if (event === 'SIGNED_OUT') showLogin();
+    if (event === 'SIGNED_OUT') {
+      appReady = false;
+      showLogin();
+    }
   });
-
-  // 同时检查现有 session（处理 refresh）
-  // onAuthStateChange 在有现有 session 时也会触发 INITIAL_SESSION
-  // bootApp 里的 booting 标志会防止重复执行
 });
-// ═══ BOOT APP (只有一个！) ═══
+
+// ═══ BOOT APP (唯一) ═══
 async function bootApp(user) {
-  if (booting) return;
-  booting = true;
+  if (appReady) return;
+  appReady = true; // 立刻锁上，防止重复
   loading('Loading your profile...');
   ME = user;
 
   try {
-    const { data, error } = await sb
-      .from('employees')
-      .select('*')
-      .ilike('email', user.email.trim())
-      .limit(1);
-
+    const { data, error } = await sb.from('employees').select('*').ilike('email', user.email.trim()).limit(1);
     if (error) throw error;
     const emp = data?.[0];
 
     if (!emp) {
+      appReady = false;
+      loading(false);
       showLogin();
       toast('Email not registered. Contact HR.', 'err');
       await sb.auth.signOut();
@@ -525,9 +418,7 @@ async function bootApp(user) {
     }
 
     if (emp.department_id) {
-      const { data: dept } = await sb
-        .from('departments').select('name')
-        .eq('id', emp.department_id).single();
+      const { data: dept } = await sb.from('departments').select('name').eq('id', emp.department_id).single();
       emp.departments = dept || null;
     } else {
       emp.departments = null;
@@ -538,40 +429,28 @@ async function bootApp(user) {
     renderApp();
 
   } catch (e) {
+    appReady = false; // 出错时解锁
     console.error('BOOT ERROR', e);
     toast('Error: ' + e.message, 'err');
   } finally {
     loading(false);
-    booting = false;  // 每次都重置，refresh 可以重新进
   }
 }
+
 // ═══ LOAD DATA ═══
 async function loadData() {
   const yr = new Date().getFullYear();
   const role = EMP.role;
 
   const [balR, reqR, typeR, holR, deptR] = await Promise.all([
-    sb.from('leave_balance')
-      .select('*, leave_type(name,code,color)')
-      .eq('employee_id', EMP.id)
-      .eq('cycle_year', yr),
-
+    sb.from('leave_balance').select('*, leave_type(name,code,color)').eq('employee_id', EMP.id).eq('cycle_year', yr),
     role === 'super_admin' || role === 'operation_admin'
-      ? sb.from('leave_request')
-          .select('*, employees(full_name,department_id), leave_type(name,code)')
-          .order('created_at',{ascending:false}).limit(100)
+      ? sb.from('leave_request').select('*, employees(full_name,department_id), leave_type(name,code)').order('created_at',{ascending:false}).limit(100)
       : role === 'dept_manager'
-        ? sb.from('leave_request')
-            .select('*, employees(full_name,department_id), leave_type(name,code)')
-            .order('created_at',{ascending:false}).limit(50)
-        : sb.from('leave_request')
-            .select('*, leave_type(name,code)')
-            .eq('employee_id', EMP.id)
-            .order('created_at',{ascending:false}).limit(30),
-
+        ? sb.from('leave_request').select('*, employees(full_name,department_id), leave_type(name,code)').order('created_at',{ascending:false}).limit(50)
+        : sb.from('leave_request').select('*, leave_type(name,code)').eq('employee_id', EMP.id).order('created_at',{ascending:false}).limit(30),
     sb.from('leave_type').select('*').eq('is_active', true),
-    sb.from('holiday_calendar').select('*')
-      .gte('date', `${yr}-01-01`).lte('date', `${yr}-12-31`).order('date'),
+    sb.from('holiday_calendar').select('*').gte('date',`${yr}-01-01`).lte('date',`${yr}-12-31`).order('date'),
     sb.from('departments').select('*').eq('is_active', true).order('name')
   ]);
 
@@ -582,12 +461,7 @@ async function loadData() {
   DATA.departments = deptR.data || [];
 
   if (role !== 'staff') {
-    const { data: emps } = await sb
-      .from('employees')
-      .select('*')
-      .eq('is_active', true)
-      .order('full_name');
-
+    const { data: emps } = await sb.from('employees').select('*').eq('is_active', true).order('full_name');
     if (emps) {
       emps.forEach(e => {
         const dept = DATA.departments.find(d => d.id === e.department_id);
@@ -596,7 +470,6 @@ async function loadData() {
     }
     DATA.employees = emps || [];
   }
-
   console.log('DATA LOADED', DATA);
 }
 
@@ -622,18 +495,15 @@ async function doSendOTP() {
 }
 
 async function doResend() {
-  try {
-    await sb.auth.signInWithOtp({ email:curEmail, options:{shouldCreateUser:false} });
-    toast('Code resent! Check inbox.','ok');
-  } catch(e) { toast('Failed to resend','err'); }
+  try { await sb.auth.signInWithOtp({ email:curEmail, options:{shouldCreateUser:false} }); toast('Code resent!','ok'); }
+  catch(e) { toast('Failed to resend','err'); }
 }
 
 function otpIn(el, i) {
   el.value = el.value.replace(/\D/g,'').slice(-1);
   const boxes = document.querySelectorAll('.otp-box');
   if (el.value && i < 5) boxes[i+1].focus();
-  const code = [...boxes].map(b => b.value).join('');
-  document.getElementById('btn-verify').disabled = code.length < 6;
+  document.getElementById('btn-verify').disabled = [...boxes].map(b=>b.value).join('').length < 6;
 }
 
 function otpKey(e, i) {
@@ -652,6 +522,7 @@ async function doVerify() {
   try {
     const {error} = await sb.auth.verifyOtp({ email:curEmail, token:code, type:'email' });
     if (error) throw error;
+    // onAuthStateChange SIGNED_IN 会触发 bootApp
   } catch(e) {
     showErr('err-otp', e.message || 'Invalid code. Try again.');
     btn.disabled = false; btn.innerHTML = 'Verify & Sign In';
@@ -662,8 +533,8 @@ async function doVerify() {
 function backToEmail() {
   document.getElementById('step-otp').classList.remove('active');
   document.getElementById('step-email').classList.add('active');
-  const btn = document.getElementById('btn-send');
-  btn.disabled = false; btn.innerHTML = 'Send Sign-in Code';
+  document.getElementById('btn-send').disabled = false;
+  document.getElementById('btn-send').innerHTML = 'Send Sign-in Code';
 }
 
 function showErr(id, msg) { const e = document.getElementById(id); e.textContent = '⚠ '+msg; e.style.display = 'block'; }
@@ -684,9 +555,7 @@ function renderApp() {
   nav('dashboard');
 }
 
-function roleLabel(r) {
-  return {super_admin:'Super Admin',operation_admin:'Operation Admin',dept_manager:'Dept Manager',staff:'Staff'}[r]||r;
-}
+function roleLabel(r) { return {super_admin:'Super Admin',operation_admin:'Operation Admin',dept_manager:'Dept Manager',staff:'Staff'}[r]||r; }
 function roleBanner(r) {
   return {
     super_admin:'👑 Super Admin — Full system access including backend settings',
@@ -697,98 +566,63 @@ function roleBanner(r) {
 }
 
 function buildNav(role) {
-  const items = [
-    {id:'dashboard', ico:'⊞', lbl:'Dashboard'},
-    {id:'myleave',   ico:'📅', lbl:'My Leave'},
-    {id:'apply',     ico:'✏', lbl:'Apply Leave'},
-  ];
+  const items = [{id:'dashboard',ico:'⊞',lbl:'Dashboard'},{id:'myleave',ico:'📅',lbl:'My Leave'},{id:'apply',ico:'✏',lbl:'Apply Leave'}];
   if (role === 'dept_manager' || role === 'operation_admin' || role === 'super_admin') {
-    items.push({id:'approvals', ico:'✓', lbl:'Approvals', badge: DATA.requests.filter(r=>r.status==='pending').length||''});
-    items.push({id:'team', ico:'👥', lbl:'Team'});
+    items.push({id:'approvals',ico:'✓',lbl:'Approvals',badge:DATA.requests.filter(r=>r.status==='pending').length||''});
+    items.push({id:'team',ico:'👥',lbl:'Team'});
   }
   if (role === 'operation_admin' || role === 'super_admin') {
-    items.push({id:'reports', ico:'📊', lbl:'Reports'});
-    items.push({id:'calendar', ico:'📅', lbl:'Calendar'});
+    items.push({id:'reports',ico:'📊',lbl:'Reports'});
+    items.push({id:'calendar',ico:'📅',lbl:'Calendar'});
   }
-  if (role === 'super_admin') {
-    items.push({id:'settings', ico:'⚙', lbl:'Settings'});
-  }
+  if (role === 'super_admin') items.push({id:'settings',ico:'⚙',lbl:'Settings'});
 
-  document.getElementById('sidebar-nav').innerHTML =
-    '<div class="nav-section">Menu</div>' +
+  document.getElementById('sidebar-nav').innerHTML = '<div class="nav-section">Menu</div>' +
     items.map(i=>`<button class="nav-btn" data-nav="${i.id}" onclick="nav('${i.id}')">
       <span class="nav-ico">${i.ico}</span>${i.lbl}
       ${i.badge?`<span class="nav-badge">${i.badge}</span>`:''}
     </button>`).join('');
-
-  document.getElementById('mob-nav-items').innerHTML =
-    items.slice(0,5).map(i=>`<div class="mob-nav-item" data-mnav="${i.id}" onclick="nav('${i.id}')">
-      <div class="mob-nav-ico">${i.ico}</div>${i.lbl}
-    </div>`).join('');
+  document.getElementById('mob-nav-items').innerHTML = items.slice(0,5).map(i=>`<div class="mob-nav-item" data-mnav="${i.id}" onclick="nav('${i.id}')">
+    <div class="mob-nav-ico">${i.ico}</div>${i.lbl}</div>`).join('');
 }
 
-// ═══ NAVIGATION ═══
 function nav(id) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.nav===id));
   document.querySelectorAll('.mob-nav-item').forEach(b=>b.classList.toggle('active', b.dataset.mnav===id));
-  const titles = {dashboard:'Dashboard',myleave:'My Leave',apply:'Apply Leave',
-    approvals:'Approvals',team:'Team',reports:'Reports',calendar:'Calendar',settings:'Settings'};
+  const titles = {dashboard:'Dashboard',myleave:'My Leave',apply:'Apply Leave',approvals:'Approvals',team:'Team',reports:'Reports',calendar:'Calendar',settings:'Settings'};
   document.getElementById('page-title').textContent = titles[id]||id;
-  const renders = {dashboard:vDashboard,myleave:vMyLeave,apply:vApply,approvals:vApprovals,
-    team:vTeam,reports:vReports,calendar:vCalendar,settings:vSettings};
+  const renders = {dashboard:vDashboard,myleave:vMyLeave,apply:vApply,approvals:vApprovals,team:vTeam,reports:vReports,calendar:vCalendar,settings:vSettings};
   document.getElementById('content').innerHTML = `<div class="view active">${(renders[id]||vDashboard)()}</div>`;
   if (window.innerWidth <= 768) closeSidebar();
   if (id === 'calendar') renderCal();
   if (id === 'reports') renderChart();
 }
 
-// ═══ DASHBOARD ═══
 function vDashboard() {
   const role = EMP.role;
   const pend = DATA.requests.filter(r=>r.status==='pending').length;
   const appd = DATA.requests.filter(r=>r.status==='approved').length;
   const al   = DATA.balances.find(b=>b.leave_type?.code==='AL');
   const alLeft = al ? (al.entitlement + al.carried_forward - al.used) : '—';
-  return `
-    <div class="stats-row">
-      ${role !== 'staff' ? `<div class="stat">
-        <div class="stat-top"><div class="stat-ico" style="background:var(--amber-l)">⏳</div>
-        <span class="stat-tag" style="background:var(--amber-l);color:var(--amber)">${pend} new</span></div>
-        <div class="stat-val" style="color:var(--amber)">${pend}</div>
-        <div class="stat-lbl">Pending Approvals</div>
-      </div>` : ''}
-      <div class="stat">
-        <div class="stat-top"><div class="stat-ico" style="background:var(--sage-l)">✅</div></div>
-        <div class="stat-val" style="color:var(--sage)">${appd}</div>
-        <div class="stat-lbl">Approved Leaves</div>
-      </div>
-      <div class="stat">
-        <div class="stat-top"><div class="stat-ico" style="background:var(--purple-l)">🌴</div>
-        ${al?`<span class="stat-tag" style="background:var(--purple-l);color:var(--purple)">${al.entitlement}d entitled</span>`:''}</div>
-        <div class="stat-val" style="color:var(--purple)">${alLeft}</div>
-        <div class="stat-lbl">Annual Leave Left</div>
-      </div>
-      <div class="stat">
-        <div class="stat-top"><div class="stat-ico" style="background:var(--sky-l)">📋</div></div>
-        <div class="stat-val" style="color:var(--sky)">${DATA.requests.length}</div>
-        <div class="stat-lbl">Total Requests</div>
-      </div>
-    </div>
-    <div class="grid-2">
-      <div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">My Leave Balance</div>
-            <span class="card-act" onclick="nav('myleave')">View all →</span></div>
-          <div class="bal-grid">${renderBals()}</div>
-        </div>
-      </div>
-      <div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">Recent Requests</div></div>
-          ${renderReqTable(DATA.requests.slice(0,5))}
-        </div>
-      </div>
-    </div>`;
+  return `<div class="stats-row">
+    ${role !== 'staff' ? `<div class="stat"><div class="stat-top"><div class="stat-ico" style="background:var(--amber-l)">⏳</div>
+      <span class="stat-tag" style="background:var(--amber-l);color:var(--amber)">${pend} new</span></div>
+      <div class="stat-val" style="color:var(--amber)">${pend}</div><div class="stat-lbl">Pending Approvals</div></div>` : ''}
+    <div class="stat"><div class="stat-top"><div class="stat-ico" style="background:var(--sage-l)">✅</div></div>
+      <div class="stat-val" style="color:var(--sage)">${appd}</div><div class="stat-lbl">Approved Leaves</div></div>
+    <div class="stat"><div class="stat-top"><div class="stat-ico" style="background:var(--purple-l)">🌴</div>
+      ${al?`<span class="stat-tag" style="background:var(--purple-l);color:var(--purple)">${al.entitlement}d entitled</span>`:''}</div>
+      <div class="stat-val" style="color:var(--purple)">${alLeft}</div><div class="stat-lbl">Annual Leave Left</div></div>
+    <div class="stat"><div class="stat-top"><div class="stat-ico" style="background:var(--sky-l)">📋</div></div>
+      <div class="stat-val" style="color:var(--sky)">${DATA.requests.length}</div><div class="stat-lbl">Total Requests</div></div>
+  </div>
+  <div class="grid-2">
+    <div><div class="card"><div class="card-head"><div class="card-title">My Leave Balance</div>
+      <span class="card-act" onclick="nav('myleave')">View all →</span></div>
+      <div class="bal-grid">${renderBals()}</div></div></div>
+    <div><div class="card"><div class="card-head"><div class="card-title">Recent Requests</div></div>
+      ${renderReqTable(DATA.requests.slice(0,5))}</div></div>
+  </div>`;
 }
 
 function renderBals() {
@@ -801,8 +635,7 @@ function renderBals() {
     const c = pct > 75 ? 'var(--rose)' : pct > 50 ? 'var(--amber)' : color;
     return `<div class="bal-item">
       <div class="bal-type">${b.leave_type?.name||'Leave'}</div>
-      <div class="bal-nums"><span class="bal-used" style="color:${c}">${used}</span>
-        <span class="bal-total">/ ${total+cf}d</span></div>
+      <div class="bal-nums"><span class="bal-used" style="color:${c}">${used}</span><span class="bal-total">/ ${total+cf}d</span></div>
       <div class="bal-bar"><div class="bal-fill" style="width:${pct}%;background:${c}"></div></div>
       <div class="bal-rem">${left} days remaining${cf>0?` (incl. ${cf}d carried)`:''}${b.pending?` · ${b.pending}d pending`:''}</div>
     </div>`;
@@ -810,73 +643,56 @@ function renderBals() {
 }
 
 function renderReqTable(items) {
-  if (!items.length) return `<div class="empty"><div class="empty-ico">📭</div>
-    <div class="empty-ttl">No requests yet</div><div class="empty-sub">Apply for leave to get started</div></div>`;
-  return `<div class="tbl-wrap"><table>
-    <thead><tr><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead>
+  if (!items.length) return `<div class="empty"><div class="empty-ico">📭</div><div class="empty-ttl">No requests yet</div><div class="empty-sub">Apply for leave to get started</div></div>`;
+  return `<div class="tbl-wrap"><table><thead><tr><th>Type</th><th>Dates</th><th>Days</th><th>Status</th></tr></thead>
     <tbody>${items.map(r=>`<tr>
       <td style="font-weight:600">${r.leave_type?.name||'—'}</td>
       <td style="font-family:var(--mono);font-size:12px">${fmt(r.start_date)} – ${fmt(r.end_date)}</td>
       <td style="font-family:var(--mono);font-weight:700">${r.total_days}</td>
       <td><span class="badge badge-${r.status}">${r.status}</span></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
+    </tr>`).join('')}</tbody></table></div>`;
 }
 
-// ═══ MY LEAVE ═══
 function vMyLeave() {
-  return `
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-head"><div class="card-title">Leave Balances — ${new Date().getFullYear()}</div></div>
-      <div class="bal-grid" style="grid-template-columns:repeat(3,1fr)">${renderBals()}</div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div class="card-title">All My Requests</div></div>
-      ${renderReqTable(DATA.requests)}
-    </div>`;
+  return `<div class="card" style="margin-bottom:18px">
+    <div class="card-head"><div class="card-title">Leave Balances — ${new Date().getFullYear()}</div></div>
+    <div class="bal-grid" style="grid-template-columns:repeat(3,1fr)">${renderBals()}</div>
+  </div>
+  <div class="card"><div class="card-head"><div class="card-title">All My Requests</div></div>${renderReqTable(DATA.requests)}</div>`;
 }
 
-// ═══ APPLY LEAVE ═══
 function vApply() {
   const opts = DATA.leaveTypes.map(t => {
     const b = DATA.balances.find(x=>x.leave_type_id===t.id);
     const left = b ? Math.max(0, b.entitlement + (b.carried_forward||0) - b.used) : '?';
     return `<option value="${t.id}" data-max="${b?(b.entitlement+(b.carried_forward||0)-b.used):0}">${t.name} (${left} days left)</option>`;
   }).join('');
-  return `
-    <div class="card" style="max-width:560px">
-      <div class="card-head"><div class="card-title">New Leave Application</div></div>
-      <div class="card-body">
-        <div class="form-row"><label class="form-lbl">LEAVE TYPE</label>
-          <select class="form-select" id="f-type" onchange="calcDays()">${opts}</select></div>
-        <div class="date-row">
-          <div class="form-row"><label class="form-lbl">START DATE</label>
-            <input class="form-input" type="date" id="f-start" onchange="calcDays()"></div>
-          <div class="form-row"><label class="form-lbl">END DATE</label>
-            <input class="form-input" type="date" id="f-end" onchange="calcDays()"></div>
-        </div>
-        <div class="days-box" id="days-box">📅 <span id="days-cnt">0</span> working days</div>
-        <div class="warn-box" id="warn-box">⚠ Insufficient leave balance</div>
-        <div class="form-row"><label class="form-lbl">REASON <span style="color:var(--ink3);font-weight:400">(optional)</span></label>
-          <textarea class="form-textarea" id="f-reason" placeholder="Briefly describe your reason..."></textarea></div>
-        <button class="submit-btn" id="f-submit" onclick="submitLeave()">Submit Application</button>
+  return `<div class="card" style="max-width:560px">
+    <div class="card-head"><div class="card-title">New Leave Application</div></div>
+    <div class="card-body">
+      <div class="form-row"><label class="form-lbl">LEAVE TYPE</label><select class="form-select" id="f-type" onchange="calcDays()">${opts}</select></div>
+      <div class="date-row">
+        <div class="form-row"><label class="form-lbl">START DATE</label><input class="form-input" type="date" id="f-start" onchange="calcDays()"></div>
+        <div class="form-row"><label class="form-lbl">END DATE</label><input class="form-input" type="date" id="f-end" onchange="calcDays()"></div>
       </div>
+      <div class="days-box" id="days-box">📅 <span id="days-cnt">0</span> working days</div>
+      <div class="warn-box" id="warn-box">⚠ Insufficient leave balance</div>
+      <div class="form-row"><label class="form-lbl">REASON <span style="color:var(--ink3);font-weight:400">(optional)</span></label>
+        <textarea class="form-textarea" id="f-reason" placeholder="Briefly describe your reason..."></textarea></div>
+      <button class="submit-btn" id="f-submit" onclick="submitLeave()">Submit Application</button>
     </div>
-    <div class="card" style="max-width:560px">
-      <div class="card-head"><div class="card-title">Earn Leave (Replacement)</div></div>
-      <div class="card-body">
-        <div style="font-size:13px;color:var(--ink2);margin-bottom:14px;line-height:1.5">
-          Worked on a non-working day? Apply for replacement leave (RL) to compensate.
-        </div>
-        <div class="date-row">
-          <div class="form-row"><label class="form-lbl">DATE WORKED</label>
-            <input class="form-input" type="date" id="e-worked"></div>
-          <div class="form-row"><label class="form-lbl">REASON</label>
-            <input class="form-input" id="e-reason" placeholder="e.g. Project deadline"></div>
-        </div>
-        <button class="submit-btn" style="background:var(--purple)" onclick="submitEarnLeave()">Submit Earn Leave</button>
+  </div>
+  <div class="card" style="max-width:560px">
+    <div class="card-head"><div class="card-title">Earn Leave (Replacement)</div></div>
+    <div class="card-body">
+      <div style="font-size:13px;color:var(--ink2);margin-bottom:14px;line-height:1.5">Worked on a non-working day? Apply for replacement leave (RL) to compensate.</div>
+      <div class="date-row">
+        <div class="form-row"><label class="form-lbl">DATE WORKED</label><input class="form-input" type="date" id="e-worked"></div>
+        <div class="form-row"><label class="form-lbl">REASON</label><input class="form-input" id="e-reason" placeholder="e.g. Project deadline"></div>
       </div>
-    </div>`;
+      <button class="submit-btn" style="background:var(--purple)" onclick="submitEarnLeave()">Submit Earn Leave</button>
+    </div>
+  </div>`;
 }
 
 async function calcDays() {
@@ -895,10 +711,8 @@ async function calcDays() {
   document.getElementById('days-cnt').textContent = days;
   const sel = document.getElementById('f-type');
   const max = parseFloat(sel.options[sel.selectedIndex].dataset.max) || 0;
-  const warn = document.getElementById('warn-box');
-  const btn  = document.getElementById('f-submit');
-  if (days > max) { warn.style.display='block'; btn.disabled=true; }
-  else            { warn.style.display='none';  btn.disabled=false; }
+  if (days > max) { document.getElementById('warn-box').style.display='block'; document.getElementById('f-submit').disabled=true; }
+  else            { document.getElementById('warn-box').style.display='none';  document.getElementById('f-submit').disabled=false; }
 }
 
 async function submitLeave() {
@@ -911,10 +725,7 @@ async function submitLeave() {
   const btn = document.getElementById('f-submit');
   btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> Submitting...';
   try {
-    const {error} = await sb.from('leave_request').insert({
-      employee_id:EMP.id, leave_type_id:typeId,
-      start_date:start, end_date:end, total_days:days, reason, status:'pending'
-    });
+    const {error} = await sb.from('leave_request').insert({employee_id:EMP.id, leave_type_id:typeId, start_date:start, end_date:end, total_days:days, reason, status:'pending'});
     if (error) throw error;
     toast('✅ Leave application submitted!','ok');
     await loadData(); nav('myleave');
@@ -928,18 +739,12 @@ async function submitEarnLeave() {
   const rl = DATA.leaveTypes.find(t=>t.code==='RL');
   if (!rl) { toast('Replacement Leave type not found','err'); return; }
   try {
-    await sb.from('leave_request').insert({
-      employee_id:EMP.id, leave_type_id:rl.id,
-      start_date:worked, end_date:worked, total_days:1,
-      reason: reason||'Earn leave - worked on non-working day',
-      is_earn_leave:true, worked_date:worked, status:'pending'
-    });
+    await sb.from('leave_request').insert({employee_id:EMP.id, leave_type_id:rl.id, start_date:worked, end_date:worked, total_days:1, reason:reason||'Earn leave - worked on non-working day', is_earn_leave:true, worked_date:worked, status:'pending'});
     toast('✅ Earn leave submitted!','ok');
     await loadData(); nav('myleave');
   } catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══ APPROVALS ═══
 function vApprovals() {
   const role = EMP.role;
   let pending = DATA.requests.filter(r=>r.status==='pending');
@@ -947,31 +752,23 @@ function vApprovals() {
     const myDeptEmps = new Set(DATA.employees.filter(e=>e.department_id===EMP.department_id).map(e=>e.id));
     pending = pending.filter(r=>myDeptEmps.has(r.employee_id));
   }
-  if (!pending.length) return `<div class="card"><div class="empty">
-    <div class="empty-ico">🎉</div><div class="empty-ttl">All caught up!</div>
-    <div class="empty-sub">No pending approvals right now.</div></div></div>`;
+  if (!pending.length) return `<div class="card"><div class="empty"><div class="empty-ico">🎉</div><div class="empty-ttl">All caught up!</div><div class="empty-sub">No pending approvals right now.</div></div></div>`;
   const colors = ['#3d7a52','#1d6fa4','#c47a1e','#7c3aed','#dc2626'];
-  return `<div class="card">
-    <div class="card-head"><div class="card-title">Pending Approvals
-      <span class="nav-badge" style="margin-left:8px">${pending.length}</span></div></div>
+  return `<div class="card"><div class="card-head"><div class="card-title">Pending Approvals <span class="nav-badge" style="margin-left:8px">${pending.length}</span></div></div>
     <div class="pend-list">${pending.map((r,i)=>{
       const name = r.employees?.full_name || EMP.full_name;
       const ini  = name.split(' ').map(n=>n[0]).join('').slice(0,2);
       return `<div class="pend-item" id="req-${r.id}">
         <div class="pend-av" style="background:${colors[i%colors.length]}">${ini}</div>
-        <div class="pend-info">
-          <div class="pend-name">${name}</div>
+        <div class="pend-info"><div class="pend-name">${name}</div>
           <div class="pend-det">${r.leave_type?.name||'—'} · ${fmt(r.start_date)} – ${fmt(r.end_date)}
-            ${r.is_earn_leave?'<span class="badge badge-purple" style="margin-left:4px">Earn Leave</span>':''}</div>
-        </div>
+            ${r.is_earn_leave?'<span class="badge badge-purple" style="margin-left:4px">Earn Leave</span>':''}</div></div>
         <div class="pend-days">${r.total_days}d</div>
         <div class="pend-acts">
           <button class="act-btn btn-ok" onclick="approve('${r.id}','approved')">✓ Approve</button>
           <button class="act-btn btn-no" onclick="approve('${r.id}','rejected')">✗ Reject</button>
         </div>
-      </div>`;}).join('')}
-    </div>
-  </div>`;
+      </div>`;}).join('')}</div></div>`;
 }
 
 async function approve(id, action) {
@@ -985,64 +782,49 @@ async function approve(id, action) {
   } catch(e) { toast('Error: '+e.message,'err'); if(row) row.style.opacity='1'; }
 }
 
-// ═══ TEAM ═══
 function vTeam() {
   let emps = DATA.employees;
   if (EMP.role === 'dept_manager') emps = emps.filter(e=>e.department_id===EMP.department_id);
-  if (!emps.length) return `<div class="card"><div class="empty"><div class="empty-ico">👥</div>
-    <div class="empty-ttl">No employees found</div></div></div>`;
+  if (!emps.length) return `<div class="card"><div class="empty"><div class="empty-ico">👥</div><div class="empty-ttl">No employees found</div></div></div>`;
   const colors = ['#3d7a52','#1d6fa4','#c47a1e','#7c3aed','#dc2626'];
   const canAdd = EMP.role === 'super_admin' || EMP.role === 'operation_admin';
-  return `<div class="card">
-    <div class="card-head"><div class="card-title">Team (${emps.length})</div>
-      ${canAdd?`<button class="card-act" onclick="openModal('modal-emp')">＋ Add Employee</button>`:''}
+  return `<div class="card"><div class="card-head"><div class="card-title">Team (${emps.length})</div>
+    ${canAdd?`<button class="card-act" onclick="openModal('modal-emp')">＋ Add Employee</button>`:''}
     </div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Name</th><th>Department</th><th>Role</th><th>Join Date</th><th>Status</th></tr></thead>
-      <tbody>${emps.map((e,i)=>`<tr>
-        <td><div style="display:flex;align-items:center;gap:10px">
-          <div class="emp-av" style="background:${colors[i%colors.length]}">${e.full_name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
-          <div><div style="font-weight:700;font-size:14px">${e.full_name}</div>
-            <div style="font-size:12px;color:var(--ink3)">${e.email||'—'}</div></div>
-        </div></td>
-        <td style="color:var(--ink2)">${e.departments?.name||'—'}</td>
-        <td><span class="badge badge-info">${roleLabel(e.role)}</span></td>
-        <td style="font-family:var(--mono);font-size:12px;color:var(--ink3)">${e.join_date?fmt(e.join_date):'—'}</td>
-        <td><span class="badge badge-${e.status||'active'}">${e.status||'active'}</span></td>
-      </tr>`).join('')}</tbody>
-    </table></div>
-  </div>`;
+    <div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Department</th><th>Role</th><th>Join Date</th><th>Status</th></tr></thead>
+    <tbody>${emps.map((e,i)=>`<tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div class="emp-av" style="background:${colors[i%colors.length]}">${e.full_name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+        <div><div style="font-weight:700;font-size:14px">${e.full_name}</div><div style="font-size:12px;color:var(--ink3)">${e.email||'—'}</div></div>
+      </div></td>
+      <td style="color:var(--ink2)">${e.departments?.name||'—'}</td>
+      <td><span class="badge badge-info">${roleLabel(e.role)}</span></td>
+      <td style="font-family:var(--mono);font-size:12px;color:var(--ink3)">${e.join_date?fmt(e.join_date):'—'}</td>
+      <td><span class="badge badge-${e.status||'active'}">${e.status||'active'}</span></td>
+    </tr>`).join('')}</tbody></table></div></div>`;
 }
 
-// ═══ REPORTS ═══
 function vReports() {
   const appd = DATA.requests.filter(r=>r.status==='approved').length;
   const pend = DATA.requests.filter(r=>r.status==='pending').length;
   const rejd = DATA.requests.filter(r=>r.status==='rejected').length;
   const totalDays = DATA.requests.filter(r=>r.status==='approved').reduce((s,r)=>s+(r.total_days||0),0);
-  return `
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
-      <button class="report-btn csv" onclick="downloadCSV()">⬇ Download CSV</button>
-      <button class="report-btn pdf" onclick="downloadPDF()">⬇ Download PDF</button>
-      <button class="report-btn wa"  onclick="sendWAReport()">📲 Send WhatsApp Report</button>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-head"><div class="card-title">Leave by Month</div></div>
-        <div class="card-body"><div class="chart-wrap" id="chart-container"></div></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="card-title">Summary</div></div>
-        <div class="card-body">
-          <div class="stats-row" style="grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0">
-            <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--sage)">${appd}</div><div class="stat-lbl">Approved</div></div>
-            <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--amber)">${pend}</div><div class="stat-lbl">Pending</div></div>
-            <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--rose)">${rejd}</div><div class="stat-lbl">Rejected</div></div>
-            <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--sky)">${totalDays}</div><div class="stat-lbl">Days Taken</div></div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+  return `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+    <button class="report-btn csv" onclick="downloadCSV()">⬇ Download CSV</button>
+    <button class="report-btn pdf" onclick="downloadPDF()">⬇ Download PDF</button>
+    <button class="report-btn wa" onclick="sendWAReport()">📲 Send WhatsApp Report</button>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="card-head"><div class="card-title">Leave by Month</div></div>
+      <div class="card-body"><div class="chart-wrap" id="chart-container"></div></div></div>
+    <div class="card"><div class="card-head"><div class="card-title">Summary</div></div>
+      <div class="card-body"><div class="stats-row" style="grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0">
+        <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--sage)">${appd}</div><div class="stat-lbl">Approved</div></div>
+        <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--amber)">${pend}</div><div class="stat-lbl">Pending</div></div>
+        <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--rose)">${rejd}</div><div class="stat-lbl">Rejected</div></div>
+        <div class="stat" style="box-shadow:none"><div class="stat-val" style="font-size:26px;color:var(--sky)">${totalDays}</div><div class="stat-lbl">Days Taken</div></div>
+      </div></div></div>
+  </div>`;
 }
 
 function renderChart() {
@@ -1050,10 +832,7 @@ function renderChart() {
   if (!el) return;
   const byMonth = {};
   for (let i=0;i<12;i++) byMonth[i]=0;
-  DATA.requests.filter(r=>r.status==='approved').forEach(r => {
-    const m = new Date(r.start_date).getMonth();
-    byMonth[m] += r.total_days||0;
-  });
+  DATA.requests.filter(r=>r.status==='approved').forEach(r => { byMonth[new Date(r.start_date).getMonth()] += r.total_days||0; });
   const max = Math.max(...Object.values(byMonth), 1);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   el.innerHTML = `<div class="chart-bars">${months.map((m,i)=>`
@@ -1061,14 +840,11 @@ function renderChart() {
       <div class="chart-val">${byMonth[i]||''}</div>
       <div class="chart-bar" style="height:${Math.max(4,(byMonth[i]/max)*100)}px;background:${byMonth[i]>0?'var(--sage)':'var(--border)'}"></div>
       <div class="chart-lbl">${m}</div>
-    </div>`).join('')}
-  </div>`;
+    </div>`).join('')}</div>`;
 }
 
-// ═══ CALENDAR ═══
 function vCalendar() {
-  return `<div class="card">
-    <div class="card-head"><div class="card-title">Leave Calendar</div></div>
+  return `<div class="card"><div class="card-head"><div class="card-title">Leave Calendar</div></div>
     <div class="cal-wrap">
       <div class="cal-nav">
         <button class="cal-arrow" onclick="changeMonth(-1)">‹</button>
@@ -1081,8 +857,7 @@ function vCalendar() {
         <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--rose-l)"></div>Public Holiday</div>
         <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--amber-l)"></div>Leave</div>
       </div>
-    </div>
-  </div>`;
+    </div></div>`;
 }
 
 function renderCal() {
@@ -1110,16 +885,12 @@ function renderCal() {
   for (let i=0;i<firstDay;i++) html += '<div class="cal-day other-month"></div>';
   for (let d=1;d<=daysInMonth;d++) {
     const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isToday = dateStr === today;
-    const isHol   = holSet.has(dateStr);
-    const leaves  = leaveSet[dateStr]||[];
+    const isToday = dateStr === today, isHol = holSet.has(dateStr), leaves = leaveSet[dateStr]||[];
     const cls = [isToday?'today':'', isHol?'holiday':'', leaves.length?'has-leave':''].filter(Boolean).join(' ');
     const hol = DATA.holidays.find(h=>h.date===dateStr);
     html += `<div class="cal-day ${cls}" title="${isHol?hol?.name+'\n':''}${leaves.join(', ')}">
-      ${d}
-      ${isHol?'<div class="cal-dot" style="background:var(--rose)"></div>':''}
-      ${leaves.length?'<div class="cal-dot" style="background:var(--amber)"></div>':''}
-    </div>`;
+      ${d}${isHol?'<div class="cal-dot" style="background:var(--rose)"></div>':''}
+      ${leaves.length?'<div class="cal-dot" style="background:var(--amber)"></div>':''}</div>`;
   }
   grid.innerHTML = html;
 }
@@ -1131,113 +902,69 @@ function changeMonth(dir) {
   renderCal();
 }
 
-// ═══ SETTINGS ═══
 function vSettings() {
-  const depts = DATA.departments;
-  const hols  = DATA.holidays;
-  const leaveTypes = DATA.leaveTypes;
-  return `
-    <div class="grid-2">
-      <div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">Departments</div>
-            <button class="card-act" onclick="openModal('modal-dept')">＋ Add</button></div>
-          <div class="card-body">
-            ${depts.length ? depts.map(d=>`
-              <div class="set-row">
-                <div><div class="set-lbl">${d.name}</div>
-                  ${d.description?`<div class="set-desc">${d.description}</div>`:''}</div>
-                <button onclick="deleteDept('${d.id}')" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px">🗑</button>
-              </div>`).join('')
-            : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No departments yet. Add one!</div>'}
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">Leave Entitlement</div></div>
-          <div class="card-body">
-            ${leaveTypes.map(t=>`
-              <div class="set-row">
-                <div><div class="set-lbl">${t.name}</div>
-                  <div class="set-desc">Code: ${t.code} · ${t.paid_leave?'Paid':'Unpaid'}</div></div>
-                <span style="font-family:var(--mono);font-weight:700;font-size:15px">${t.days_per_year||'—'}d</span>
-              </div>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">Public Holidays ${new Date().getFullYear()}</div>
-            <button class="card-act" onclick="openModal('modal-hol')">＋ Add</button></div>
-          <div class="card-body" style="max-height:400px;overflow-y:auto">
-            ${hols.length ? hols.map(h=>`
-              <div class="set-row">
-                <div><div class="set-lbl">${h.name}</div>
-                  <div class="set-desc" style="font-family:var(--mono)">${fmt(h.date)}</div></div>
-                <button onclick="deleteHoliday('${h.id}')" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px">🗑</button>
-              </div>`).join('')
-            : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No holidays set yet.</div>'}
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">WhatsApp Monthly Report</div></div>
-          <div class="card-body">
-            <div class="set-row">
-              <div><div class="set-lbl">Auto-send on month end</div>
-                <div class="set-desc">Send summary to HR & individual staff</div></div>
-              <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
-            </div>
-            <div style="margin-top:14px">
-              <button class="report-btn wa" onclick="sendWAReport()">📲 Send Report Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+  const depts = DATA.departments, hols = DATA.holidays, leaveTypes = DATA.leaveTypes;
+  return `<div class="grid-2">
+    <div>
+      <div class="card"><div class="card-head"><div class="card-title">Departments</div>
+        <button class="card-act" onclick="openModal('modal-dept')">＋ Add</button></div>
+        <div class="card-body">${depts.length ? depts.map(d=>`<div class="set-row">
+          <div><div class="set-lbl">${d.name}</div>${d.description?`<div class="set-desc">${d.description}</div>`:''}</div>
+          <button onclick="deleteDept('${d.id}')" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px">🗑</button>
+        </div>`).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No departments yet.</div>'}
+        </div></div>
+      <div class="card"><div class="card-head"><div class="card-title">Leave Entitlement</div></div>
+        <div class="card-body">${leaveTypes.map(t=>`<div class="set-row">
+          <div><div class="set-lbl">${t.name}</div><div class="set-desc">Code: ${t.code} · ${t.paid_leave?'Paid':'Unpaid'}</div></div>
+          <span style="font-family:var(--mono);font-weight:700;font-size:15px">${t.days_per_year||'—'}d</span>
+        </div>`).join('')}</div></div>
+    </div>
+    <div>
+      <div class="card"><div class="card-head"><div class="card-title">Public Holidays ${new Date().getFullYear()}</div>
+        <button class="card-act" onclick="openModal('modal-hol')">＋ Add</button></div>
+        <div class="card-body" style="max-height:400px;overflow-y:auto">${hols.length ? hols.map(h=>`<div class="set-row">
+          <div><div class="set-lbl">${h.name}</div><div class="set-desc" style="font-family:var(--mono)">${fmt(h.date)}</div></div>
+          <button onclick="deleteHoliday('${h.id}')" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px">🗑</button>
+        </div>`).join('') : '<div style="color:var(--ink3);font-size:13px;padding:8px 0">No holidays set yet.</div>'}
+        </div></div>
+      <div class="card"><div class="card-head"><div class="card-title">WhatsApp Monthly Report</div></div>
+        <div class="card-body">
+          <div class="set-row"><div><div class="set-lbl">Auto-send on month end</div><div class="set-desc">Send summary to HR & staff</div></div>
+            <button class="toggle on" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button></div>
+          <div style="margin-top:14px"><button class="report-btn wa" onclick="sendWAReport()">📲 Send Report Now</button></div>
+        </div></div>
+    </div>
+  </div>`;
 }
 
-// ═══ CRUD ═══
 async function saveDept() {
   const name = document.getElementById('d-name').value.trim();
   const desc = document.getElementById('d-desc').value.trim();
   if (!name) { toast('Enter department name','err'); return; }
-  try {
-    await sb.from('departments').insert({name, description:desc||null});
-    toast('✅ Department added!','ok');
-    closeModal('modal-dept'); await loadData(); nav('settings');
-  } catch(e) { toast('Error: '+e.message,'err'); }
+  try { await sb.from('departments').insert({name, description:desc||null}); toast('✅ Department added!','ok'); closeModal('modal-dept'); await loadData(); nav('settings'); }
+  catch(e) { toast('Error: '+e.message,'err'); }
 }
-
 async function deleteDept(id) {
   if (!confirm('Delete this department?')) return;
-  try {
-    await sb.from('departments').update({is_active:false}).eq('id',id);
-    toast('Department removed','ok'); await loadData(); nav('settings');
-  } catch(e) { toast('Error: '+e.message,'err'); }
+  try { await sb.from('departments').update({is_active:false}).eq('id',id); toast('Department removed','ok'); await loadData(); nav('settings'); }
+  catch(e) { toast('Error: '+e.message,'err'); }
 }
-
 async function saveHoliday() {
   const name = document.getElementById('h-name').value.trim();
   const date = document.getElementById('h-date').value;
   if (!name || !date) { toast('Fill all fields','err'); return; }
-  try {
-    await sb.from('holiday_calendar').insert({name, date});
-    toast('✅ Holiday added!','ok');
-    closeModal('modal-hol'); await loadData(); nav('settings');
-  } catch(e) { toast('Error: '+e.message,'err'); }
+  try { await sb.from('holiday_calendar').insert({name, date}); toast('✅ Holiday added!','ok'); closeModal('modal-hol'); await loadData(); nav('settings'); }
+  catch(e) { toast('Error: '+e.message,'err'); }
 }
-
 async function deleteHoliday(id) {
   if (!confirm('Remove this holiday?')) return;
-  try {
-    await sb.from('holiday_calendar').delete().eq('id',id);
-    toast('Holiday removed','ok'); await loadData(); nav('settings');
-  } catch(e) { toast('Error: '+e.message,'err'); }
+  try { await sb.from('holiday_calendar').delete().eq('id',id); toast('Holiday removed','ok'); await loadData(); nav('settings'); }
+  catch(e) { toast('Error: '+e.message,'err'); }
 }
 
 function openModal(id) {
   if (id === 'modal-emp') {
-    const sel = document.getElementById('m-dept');
-    sel.innerHTML = '<option value="">— No Department —</option>' +
+    document.getElementById('m-dept').innerHTML = '<option value="">— No Department —</option>' +
       DATA.departments.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
   }
   document.getElementById(id).classList.add('show');
@@ -1245,38 +972,21 @@ function openModal(id) {
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
 async function saveEmployee() {
-  const name  = document.getElementById('m-name').value.trim();
-  const email = document.getElementById('m-email').value.trim();
-  const phone = document.getElementById('m-phone').value.trim();
-  const role  = document.getElementById('m-role').value;
-  const join  = document.getElementById('m-join').value;
-  const dept  = document.getElementById('m-dept').value;
+  const name=document.getElementById('m-name').value.trim(), email=document.getElementById('m-email').value.trim();
+  const phone=document.getElementById('m-phone').value.trim(), role=document.getElementById('m-role').value;
+  const join=document.getElementById('m-join').value, dept=document.getElementById('m-dept').value;
   if (!name || !email || !join) { toast('Name, email & join date required','err'); return; }
-  try {
-    await sb.from('employees').insert({
-      full_name:name, email, phone_wa:phone||null, role,
-      join_date:join, department_id:dept||null, status:'active'
-    });
-    toast('✅ Employee added!','ok');
-    closeModal('modal-emp'); await loadData(); nav('team');
-  } catch(e) { toast('Error: '+e.message,'err'); }
+  try { await sb.from('employees').insert({full_name:name, email, phone_wa:phone||null, role, join_date:join, department_id:dept||null, status:'active'}); toast('✅ Employee added!','ok'); closeModal('modal-emp'); await loadData(); nav('team'); }
+  catch(e) { toast('Error: '+e.message,'err'); }
 }
 
-// ═══ REPORTS DOWNLOAD ═══
 function downloadCSV() {
   const rows = [['Name','Leave Type','Start Date','End Date','Days','Status','Submitted']];
-  DATA.requests.forEach(r => {
-    rows.push([
-      r.employees?.full_name || EMP.full_name,
-      r.leave_type?.name||'—',
-      r.start_date, r.end_date, r.total_days, r.status,
-      new Date(r.created_at).toLocaleDateString('en-MY')
-    ]);
-  });
+  DATA.requests.forEach(r => { rows.push([r.employees?.full_name||EMP.full_name, r.leave_type?.name||'—', r.start_date, r.end_date, r.total_days, r.status, new Date(r.created_at).toLocaleDateString('en-MY')]); });
   const csv = rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
   const blob = new Blob([csv], {type:'text/csv'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
   a.href = url; a.download = `LeaveOS_Report_${new Date().toISOString().split('T')[0]}.csv`;
   a.click(); URL.revokeObjectURL(url);
   toast('✅ CSV downloaded!','ok');
@@ -1286,59 +996,32 @@ function downloadPDF() {
   const yr = new Date().getFullYear();
   const approved = DATA.requests.filter(r=>r.status==='approved');
   const pending  = DATA.requests.filter(r=>r.status==='pending');
-  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LeaveOS Report ${yr}</title>
-  <style>body{font-family:Arial,sans-serif;padding:32px;color:#18181b;font-size:13px;}
-  h1{font-size:22px;margin-bottom:4px;}.sub{color:#71717a;margin-bottom:28px;font-size:13px;}
-  .stats{display:flex;gap:20px;margin-bottom:28px;}.stat{background:#f5f4f1;border-radius:10px;padding:16px 20px;flex:1;}
-  .stat-v{font-size:28px;font-weight:700;margin-bottom:2px;}.stat-l{font-size:12px;color:#71717a;}
-  table{width:100%;border-collapse:collapse;margin-top:16px;}
-  th{background:#f5f4f1;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;}
-  td{padding:11px 12px;border-bottom:1px solid #e4e4e7;font-size:13px;}
-  .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-  .approved{background:#eaf2ed;color:#3d7a52;}.pending{background:#fef3e0;color:#c47a1e;}
-  .rejected{background:#fef2f2;color:#dc2626;}@media print{body{padding:0;}}</style></head><body>
-  <h1>🌿 LeaveOS — Leave Report</h1>
-  <div class="sub">Generated: ${new Date().toLocaleString('en-MY')} · Year ${yr}</div>
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LeaveOS Report ${yr}</title>
+  <style>body{font-family:Arial,sans-serif;padding:32px;color:#18181b;font-size:13px;}h1{font-size:22px;margin-bottom:4px;}.sub{color:#71717a;margin-bottom:28px;}.stats{display:flex;gap:20px;margin-bottom:28px;}.stat{background:#f5f4f1;border-radius:10px;padding:16px 20px;flex:1;}.stat-v{font-size:28px;font-weight:700;}.stat-l{font-size:12px;color:#71717a;}table{width:100%;border-collapse:collapse;}th{background:#f5f4f1;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#71717a;text-transform:uppercase;}td{padding:11px 12px;border-bottom:1px solid #e4e4e7;}.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;}.approved{background:#eaf2ed;color:#3d7a52;}.pending{background:#fef3e0;color:#c47a1e;}.rejected{background:#fef2f2;color:#dc2626;}</style></head><body>
+  <h1>🌿 LeaveOS — Leave Report</h1><div class="sub">Generated: ${new Date().toLocaleString('en-MY')} · Year ${yr}</div>
   <div class="stats">
     <div class="stat"><div class="stat-v" style="color:#3d7a52">${approved.length}</div><div class="stat-l">Approved</div></div>
     <div class="stat"><div class="stat-v" style="color:#c47a1e">${pending.length}</div><div class="stat-l">Pending</div></div>
     <div class="stat"><div class="stat-v" style="color:#1d6fa4">${approved.reduce((s,r)=>s+(r.total_days||0),0)}</div><div class="stat-l">Total Days</div></div>
   </div>
   <table><thead><tr><th>Employee</th><th>Leave Type</th><th>Start</th><th>End</th><th>Days</th><th>Status</th></tr></thead>
-  <tbody>${DATA.requests.map(r=>`<tr>
-    <td style="font-weight:600">${r.employees?.full_name||EMP.full_name}</td>
-    <td>${r.leave_type?.name||'—'}</td>
-    <td style="font-family:monospace">${r.start_date}</td>
-    <td style="font-family:monospace">${r.end_date}</td>
-    <td style="font-family:monospace;font-weight:700">${r.total_days}</td>
-    <td><span class="badge ${r.status}">${r.status}</span></td>
-  </tr>`).join('')}</tbody></table>
+  <tbody>${DATA.requests.map(r=>`<tr><td style="font-weight:600">${r.employees?.full_name||EMP.full_name}</td><td>${r.leave_type?.name||'—'}</td><td>${r.start_date}</td><td>${r.end_date}</td><td style="font-weight:700">${r.total_days}</td><td><span class="badge ${r.status}">${r.status}</span></td></tr>`).join('')}</tbody></table>
   <script>window.onload=()=>{window.print();}<\/script></body></html>`;
-  const w = window.open('','_blank');
-  w.document.write(html); w.document.close();
-  toast('✅ PDF ready to print/save!','ok');
+  const w = window.open('','_blank'); w.document.write(html); w.document.close();
+  toast('✅ PDF ready!','ok');
 }
 
 function sendWAReport() {
-  const yr = new Date().getFullYear();
-  const mo = new Date().toLocaleString('en-MY',{month:'long'});
+  const yr = new Date().getFullYear(), mo = new Date().toLocaleString('en-MY',{month:'long'});
   const approved = DATA.requests.filter(r=>r.status==='approved').length;
   const pending  = DATA.requests.filter(r=>r.status==='pending').length;
   const days     = DATA.requests.filter(r=>r.status==='approved').reduce((s,r)=>s+(r.total_days||0),0);
-  const msg = encodeURIComponent(
-    `🌿 *LeaveOS Monthly Report — ${mo} ${yr}*\n\n` +
-    `✅ Approved: ${approved} requests\n` +
-    `⏳ Pending: ${pending} requests\n` +
-    `📅 Total days taken: ${days} days\n\n` +
-    `_Auto-generated by LeaveOS_`
-  );
-  window.open(`https://wa.me/?text=${msg}`, '_blank');
+  window.open(`https://wa.me/?text=${encodeURIComponent(`🌿 *LeaveOS Monthly Report — ${mo} ${yr}*\n\n✅ Approved: ${approved} requests\n⏳ Pending: ${pending} requests\n📅 Total days taken: ${days} days\n\n_Auto-generated by LeaveOS_`)}`, '_blank');
   toast('📲 Opening WhatsApp...','ok');
 }
 
-// ═══ AUTH ═══
 async function doLogout() {
-  booting = false;
+  appReady = false;
   await sb.auth.signOut();
   ME = null; EMP = null;
   DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
@@ -1355,18 +1038,9 @@ function showLogin() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
 }
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
 
-// ═══ SIDEBAR ═══
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
-
-// ═══ UTILITIES ═══
 function loading(txt) {
   const el = document.getElementById('loading');
   if (txt === false) { el.style.display='none'; return; }
