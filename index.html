@@ -408,7 +408,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-});
   // 同时处理 refresh 和新登录
   // onAuthStateChange 会在页面加载时触发 INITIAL_SESSION（有session时）或等待 SIGNED_IN（无session时）
   sb.auth.onAuthStateChange(async (event, session) => {
