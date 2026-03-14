@@ -488,19 +488,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  // 只用 onAuthStateChange，不单独调用 getSession
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) {
       await bootApp(session.user);
     }
     if (event === 'SIGNED_OUT') showLogin();
   });
-});
-
-  const { data: { session } } = await sb.auth.getSession();
-  if (session && !booting) {
-    await bootApp(session.user);
-  }
 });
 
 // ═══ BOOT APP (只有一个！) ═══
