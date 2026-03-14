@@ -663,21 +663,48 @@ async function bootApp(user) {
   loading('Loading your profile...');
   ME = user;
   try {
-    const email = user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email;
-    if (!email) { appReady = false; loading(false); showLogin(); toast('Could not detect email.','err'); await sb.auth.signOut(); return; }
-    const {data:emp, error} = await sb.from('employees').select('*, departments!employees_department_id_fkey(name)').eq('email', email).single();
-    if (error || !emp) { appReady = false; loading(false); showLogin(); toast('Email not registered. Contact HR.','err'); await sb.auth.signOut(); return; }
+    const email = user.email || user.user_metadata?.email;
+    if (!email) {
+      loading(false); showLogin();
+      toast('Could not detect email.','err');
+      await sb.auth.signOut();
+      return;
+    }
+
+    // 不用 fkey join，直接查 *
+    const { data, error } = await sb
+      .from('employees')
+      .select('*')
+      .eq('email', email)
+      .limit(1);
+
+    if (error || !data?.[0]) {
+      loading(false); showLogin();
+      toast('Email not registered. Contact HR.','err');
+      await sb.auth.signOut();
+      return;
+    }
+
+    const emp = data[0];
+    if (emp.department_id) {
+      const { data: dept } = await sb.from('departments').select('name').eq('id', emp.department_id).single();
+      emp.departments = dept || null;
+    } else {
+      emp.departments = null;
+    }
+
     EMP = emp;
     await loadData();
     renderApp();
+
   } catch(e) {
-    appReady = false;
-    toast('Error: '+e.message,'err');
+    console.error('BOOT ERROR', e);
+    toast('Error: ' + e.message, 'err');
+    // appReady 保持 true，不解锁，防止无限循环
   } finally {
     loading(false);
   }
 }
-
 async function loadData() {
   const yr = new Date().getFullYear();
   const role = EMP.role;
