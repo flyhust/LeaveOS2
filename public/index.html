@@ -559,7 +559,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
 // ═══════════════════════════════════════
 const SUPABASE_URL = 'https://zmbethwexdcqpvqhescl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, );
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY );
 
 // ═══════════════════════════════════════
 //  STATE
@@ -717,7 +717,7 @@ async function loadData() {
         ? sb.from('leave_request').select('*, employees(full_name,department_id), leave_type(name,code)').order('created_at',{ascending:false}).limit(50)
         : sb.from('leave_request').select('*, leave_type(name,code)').eq('employee_id',EMP.id).order('created_at',{ascending:false}).limit(30),
     sb.from('leave_type').select('*').eq('is_active',true),
-    sb.from('holiday_calendar').select('*').eq('year', yr).order('date'),
+    sb.from('holiday_calendar').select('*').gte('date',`${yr}-01-01`).lte('date',`${yr}-12-31`).order('date'),
     sb.from('departments').select('*').eq('is_active',true).order('name'),
   ]);
 
@@ -728,7 +728,13 @@ async function loadData() {
   DATA.departments = deptR.data || [];
 
   if (role !== 'staff') {
-    const {data:emps} = await sb.from('employees').select('*,departments(name)').eq('is_active',true).order('full_name');
+    const {data:emps} = await sb.from('employees').select('*').eq('is_active',true).order('full_name');
+if (emps) {
+  emps.forEach(e => {
+    const dept = DATA.departments.find(d => d.id === e.department_id);
+    e.departments = dept ? { name: dept.name } : null;
+  });
+}
     DATA.employees = emps || [];
   }
 }
