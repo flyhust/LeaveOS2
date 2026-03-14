@@ -559,26 +559,22 @@ let ME = null, EMP = null;
 let DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
 let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
 let curEmail = '';
+let booting = false;
 
-// ═══════════════════════════════════════
 // ═══════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════
-let booting = false; // 防止重复执行
-
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  // 先检查是否已有登录session
   const { data: { session } } = await sb.auth.getSession();
   if (session) {
     await bootApp(session.user);
-    return; // 已经启动，不再设置监听器
+    return;
   }
 
-  // 没有session才监听新的登录
   sb.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session && !booting) {
       await bootApp(session.user);
@@ -591,9 +587,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 //  BOOT APP
 // ═══════════════════════════════════════
 async function bootApp(user) {
-  if (booting) return; // 已在执行中，直接退出
+  if (booting) return;
   booting = true;
-
   loading('Loading your profile...');
   ME = user;
 
@@ -602,36 +597,119 @@ async function bootApp(user) {
 
     const { data, error } = await sb
       .from('employees')
-      .select('*, departments!employees_department_id_fkey(name)')
+      .select('*')
       .ilike('email', user.email.trim())
       .limit(1);
-
-    console.log('查询结果', data, error);
 
     if (error) throw error;
 
     const emp = data?.[0];
+    console.log('EMPLOYEE', emp);
 
     if (!emp) {
       showLogin();
-      toast('此邮箱未注册，请联系HR。', 'err');
+      toast('Email not registered. Contact HR.', 'err');
       await sb.auth.signOut();
       return;
     }
 
-    EMP = emp;
-    console.log('员工找到了', EMP);
+    if (emp.department_id) {
+      const { data: dept } = await sb
+        .from('departments')
+        .select('name')
+        .eq('id', emp.department_id)
+        .single();
+      emp.departments = dept || null;
+    } else {
+      emp.departments = null;
+    }
 
+    EMP = emp;
     await loadData();
     renderApp();
 
   } catch (e) {
-    console.error('启动错误', e);
-    toast('错误：' + e.message, 'err');
+    console.error('BOOT ERROR', e);
+    toast('Error: ' + e.message, 'err');
   } finally {
-    loading(false); // 无论成功还是失败，都关掉转圈
+    loading(false);
     booting = false;
   }
+}
+
+   async function loadData() {
+
+  const yr = new Date().getFullYear();
+  const role = EMP.role;
+
+  const [balR, reqR, typeR, holR, deptR] = await Promise.all([
+
+    sb.from('leave_balance')
+      .select('*, leave_type(name,code,color)')
+      .eq('employee_id', EMP.id)
+      .eq('cycle_year', yr),
+
+    role === 'super_admin' || role === 'operation_admin'
+      ? sb.from('leave_request')
+          .select('*, employees(full_name,department_id), leave_type(name,code)')
+          .order('created_at',{ascending:false})
+          .limit(100)
+
+      : role === 'dept_manager'
+        ? sb.from('leave_request')
+            .select('*, employees(full_name,department_id), leave_type(name,code)')
+            .order('created_at',{ascending:false})
+            .limit(50)
+
+        : sb.from('leave_request')
+            .select('*, leave_type(name,code)')
+            .eq('employee_id', EMP.id)
+            .order('created_at',{ascending:false})
+            .limit(30),
+
+    sb.from('leave_type')
+      .select('*')
+      .eq('is_active', true),
+
+    sb.from('holiday_calendar')
+      .select('*')
+      .gte('date', `${yr}-01-01`)
+      .lte('date', `${yr}-12-31`)
+      .order('date'),
+
+    sb.from('departments')
+      .select('*')
+      .eq('is_active', true)
+      .order('name')
+
+  ]);
+
+  DATA.balances    = balR.data || [];
+  DATA.requests    = reqR.data || [];
+  DATA.leaveTypes  = typeR.data || [];
+  DATA.holidays    = holR.data || [];
+  DATA.departments = deptR.data || [];
+
+ if (role !== 'staff') {
+    const { data: emps } = await sb
+      .from('employees')
+      .select('*')
+      .eq('is_active', true)
+      .order('full_name');
+
+    if (emps) {
+      emps.forEach(e => {
+        const dept = DATA.departments.find(d => d.id === e.department_id);
+        e.departments = dept ? { name: dept.name } : null;
+      });
+    }
+    DATA.employees = emps || [];
+  }
+
+  }
+
+  console.log('DATA LOADED', DATA);
+
 }
 // ═══════════════════════════════════════
 //  LOGIN
@@ -702,125 +780,8 @@ function backToEmail() {
 function showErr(id, msg) { const e = document.getElementById(id); e.textContent = '⚠ '+msg; e.style.display = 'block'; }
 function hideErr(id) { document.getElementById(id).style.display = 'none'; }
 
-// ═══════════════════════════════════════
-//  BOOT APP
-// ═══════════════════════════════════════
-async function bootApp(user) {
 
-  loading('Loading your profile...');
-  ME = user;
 
-  try {
-
-    console.log('LOGIN USER', user);
-
-    const { data, error } = await sb
-      .from('employees')
-      .select('*, departments!employees_department_id_fkey(name)')
-      .ilike('email', user.email.trim())
-      .limit(1);
-
-    if (error) {
-      throw error;
-    }
-
-    const emp = data?.[0];
-
-    console.log('EMPLOYEE', emp);
-
-    if (!emp) {
-      loading(false);
-      showLogin();
-      toast('Email not registered. Contact HR.','err');
-      await sb.auth.signOut();
-      return;
-    }
-
-    EMP = emp;
-
-    await loadData();
-
-    renderApp();
-
-    loading(false);
-
-  } catch (e) {
-
-    console.error('BOOT ERROR', e);
-
-    loading(false);
-
-    toast('Error: ' + e.message, 'err');
-
-  }
-}
-async function loadData() {
-
-  const yr = new Date().getFullYear();
-  const role = EMP.role;
-
-  const [balR, reqR, typeR, holR, deptR] = await Promise.all([
-
-    sb.from('leave_balance')
-      .select('*, leave_type(name,code,color)')
-      .eq('employee_id', EMP.id)
-      .eq('cycle_year', yr),
-
-    role === 'super_admin' || role === 'operation_admin'
-      ? sb.from('leave_request')
-          .select('*, employees(full_name,department_id), leave_type(name,code)')
-          .order('created_at',{ascending:false})
-          .limit(100)
-
-      : role === 'dept_manager'
-        ? sb.from('leave_request')
-            .select('*, employees(full_name,department_id), leave_type(name,code)')
-            .order('created_at',{ascending:false})
-            .limit(50)
-
-        : sb.from('leave_request')
-            .select('*, leave_type(name,code)')
-            .eq('employee_id', EMP.id)
-            .order('created_at',{ascending:false})
-            .limit(30),
-
-    sb.from('leave_type')
-      .select('*')
-      .eq('is_active', true),
-
-    sb.from('holiday_calendar')
-      .select('*')
-      .gte('date', `${yr}-01-01`)
-      .lte('date', `${yr}-12-31`)
-      .order('date'),
-
-    sb.from('departments')
-      .select('*')
-      .eq('is_active', true)
-      .order('name')
-
-  ]);
-
-  DATA.balances    = balR.data || [];
-  DATA.requests    = reqR.data || [];
-  DATA.leaveTypes  = typeR.data || [];
-  DATA.holidays    = holR.data || [];
-  DATA.departments = deptR.data || [];
-
-  if (role !== 'staff') {
-
-    const { data: emps } = await sb
-     .from('employees')
-     .select('*, departments!employees_department_id_fkey(name)')
-     .eq('is_active', true)
-     .order('full_name');
-    DATA.employees = emps || [];
-
-  }
-
-  console.log('DATA LOADED', DATA);
-
-}
 
 // ═══════════════════════════════════════
 //  RENDER APP SHELL
