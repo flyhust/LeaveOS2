@@ -664,32 +664,51 @@ function hideErr(id) { document.getElementById(id).style.display = 'none'; }
 async function bootApp(user) {
   loading('Loading your profile...');
   ME = user;
+
   try {
-    const email = (user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email || '')
-  .toLowerCase()
-  .trim();
 
-console.log('Auth email detected:', email);
+    const email = (user.email || '')
+      .toLowerCase()
+      .trim();
 
-const { data: emp, error } = await sb
-  .from('employees')
-  .select('*, departments(name)')
-  .ilike('email', email)
-  .single();
+    console.log('Auth email detected:', email);
 
-console.log('Employee lookup:', emp, error);
-    if (!email) { loading(false); showLogin(); toast('Could not detect email. Try again.','err'); await sb.auth.signOut(); return; }
-    const {data:emp, error} = await sb.from('employees').select('*, departments(name)')
-      .eq('email', email).single();
+    if (!email) {
+      loading(false);
+      showLogin();
+      toast('Could not detect email. Try again.','err');
+      await sb.auth.signOut();
+      return;
+    }
+
+    const { data: emp, error } = await sb
+      .from('employees')
+      .select('*, departments(name)')
+      .ilike('email', email)
+      .single();
+
     console.log('Employee lookup:', emp, error);
-    if (error || !emp) { loading(false); showLogin(); toast('Email not registered. Contact HR.','err'); await sb.auth.signOut(); return; }
+
+    if (error || !emp) {
+      loading(false);
+      showLogin();
+      toast('Email not registered. Contact HR.','err');
+      await sb.auth.signOut();
+      return;
+    }
+
     EMP = emp;
+
     await loadData();
     renderApp();
-    loading(false);
-  } catch(e) { loading(false); toast('Error: '+e.message,'err'); }
-}
 
+    loading(false);
+
+  } catch(e) {
+    loading(false);
+    toast('Error: '+e.message,'err');
+  }
+}
 async function loadData() {
   const yr = new Date().getFullYear();
   const role = EMP.role;
