@@ -379,8 +379,36 @@ let appReady = false; // 唯一标志
 
 // ═══ INIT ═══
 document.addEventListener('DOMContentLoaded', async () => {
-  document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
+
+  document.getElementById('page-date').textContent =
+    new Date().toLocaleDateString('en-MY',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  document.getElementById('m-join').value =
+    new Date().toISOString().split('T')[0];
+
+  // ⭐ 关键：先检查已有 session（解决 F5 问题）
+  const { data:{session} } = await sb.auth.getSession();
+
+  if(session && !appReady){
+    console.log("SESSION FOUND");
+    await bootApp(session.user);
+  }
+
+  // 监听登录状态变化
+  sb.auth.onAuthStateChange(async (event, session) => {
+    console.log('AUTH EVENT:', event, !!session);
+
+    if(event === 'SIGNED_IN' && session && !appReady){
+      await bootApp(session.user);
+    }
+
+    if(event === 'SIGNED_OUT'){
+      appReady = false;
+      showLogin();
+    }
+  });
+
+});
 
   // 同时处理 refresh 和新登录
   // onAuthStateChange 会在页面加载时触发 INITIAL_SESSION（有session时）或等待 SIGNED_IN（无session时）
