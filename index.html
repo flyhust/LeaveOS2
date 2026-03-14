@@ -488,14 +488,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-      await bootApp(session.user);
-    }
-    if (event === 'SIGNED_OUT') showLogin();
-  });
+  // 先检查现有 session（处理 refresh 的情况）
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    await bootApp(session.user);
+  } else {
+    // 没有 session 才监听新登录
+    sb.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session && !booting) {
+        await bootApp(session.user);
+      }
+      if (event === 'SIGNED_OUT') showLogin();
+    });
+  }
 });
-
 // ═══ BOOT APP (只有一个！) ═══
 async function bootApp(user) {
   if (booting) return;
