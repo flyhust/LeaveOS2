@@ -488,19 +488,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
 
-  // 先检查现有 session（处理 refresh 的情况）
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    await bootApp(session.user);
-  } else {
-    // 没有 session 才监听新登录
-    sb.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session && !booting) {
-        await bootApp(session.user);
-      }
-      if (event === 'SIGNED_OUT') showLogin();
-    });
-  }
+  // 监听器一直开着（处理新登录）
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      await bootApp(session.user);
+    }
+    if (event === 'SIGNED_OUT') showLogin();
+  });
+
+  // 同时检查现有 session（处理 refresh）
+  // onAuthStateChange 在有现有 session 时也会触发 INITIAL_SESSION
+  // bootApp 里的 booting 标志会防止重复执行
 });
 // ═══ BOOT APP (只有一个！) ═══
 async function bootApp(user) {
@@ -1341,7 +1339,6 @@ function sendWAReport() {
 // ═══ AUTH ═══
 async function doLogout() {
   booting = false;
-  booted = false; 
   await sb.auth.signOut();
   ME = null; EMP = null;
   DATA = { balances:[], requests:[], employees:[], leaveTypes:[], holidays:[], departments:[] };
