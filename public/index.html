@@ -667,7 +667,7 @@ async function bootApp(user) {
 
   try {
 
-    const email = (user.email || '')
+    const email = (user.email || user.user_metadata?.email || user.identities?.[0]?.identity_data?.email || '')
       .toLowerCase()
       .trim();
 
