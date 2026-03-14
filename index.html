@@ -561,20 +561,78 @@ let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
 let curEmail = '';
 
 // ═══════════════════════════════════════
+// ═══════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════
+let booting = false; // 防止重复执行
+
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('page-date').textContent = new Date().toLocaleDateString('en-MY',
     {weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('m-join').value = new Date().toISOString().split('T')[0];
+
+  // 先检查是否已有登录session
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    await bootApp(session.user);
+    return; // 已经启动，不再设置监听器
+  }
+
+  // 没有session才监听新的登录
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) await bootApp(session.user);
+    if (event === 'SIGNED_IN' && session && !booting) {
+      await bootApp(session.user);
+    }
     if (event === 'SIGNED_OUT') showLogin();
   });
-  const { data:{session} } = await sb.auth.getSession();
-  if (session) await bootApp(session.user);
 });
 
+// ═══════════════════════════════════════
+//  BOOT APP
+// ═══════════════════════════════════════
+async function bootApp(user) {
+  if (booting) return; // 已在执行中，直接退出
+  booting = true;
+
+  loading('Loading your profile...');
+  ME = user;
+
+  try {
+    console.log('LOGIN USER', user.email);
+
+    const { data, error } = await sb
+      .from('employees')
+      .select('*, departments(name)')
+      .ilike('email', user.email.trim())
+      .limit(1);
+
+    console.log('查询结果', data, error);
+
+    if (error) throw error;
+
+    const emp = data?.[0];
+
+    if (!emp) {
+      showLogin();
+      toast('此邮箱未注册，请联系HR。', 'err');
+      await sb.auth.signOut();
+      return;
+    }
+
+    EMP = emp;
+    console.log('员工找到了', EMP);
+
+    await loadData();
+    renderApp();
+
+  } catch (e) {
+    console.error('启动错误', e);
+    toast('错误：' + e.message, 'err');
+  } finally {
+    loading(false); // 无论成功还是失败，都关掉转圈
+    booting = false;
+  }
+}
 // ═══════════════════════════════════════
 //  LOGIN
 // ═══════════════════════════════════════
