@@ -655,7 +655,13 @@ async function bootApp(user) {
   loading('Loading your profile...');
   ME = user;
   try {
-    const {data:emp, error} = await sb.from('employees').select('*, departments(name)')
+    const {data:emp, error} = await sb.from('employees')
+       .select(`
+  *,
+  departments (
+    name
+  )
+`)
       .eq('email', user.email).single();
     if (error || !emp) { loading(false); showLogin(); toast('Email not registered. Contact HR.','err'); await sb.auth.signOut(); return; }
     EMP = emp;
