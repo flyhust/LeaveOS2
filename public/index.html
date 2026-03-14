@@ -559,7 +559,7 @@ tr:hover td{background:rgba(245,244,241,.6);}
 // ═══════════════════════════════════════
 const SUPABASE_URL = 'https://zmbethwexdcqpvqhescl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptYmV0aHdleGRjcXB2cWhlc2NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDg4ODMsImV4cCI6MjA4ODk4NDg4M30.Rgc__vK63tYyAqf2GzFKAAwJt_s1YoEwIlz4ztc_UE8';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY );
 
 // ═══════════════════════════════════════
 //  STATE
@@ -665,7 +665,6 @@ async function bootApp(user) {
   try {
     const email = user.email || user.user_metadata?.email;
     if (!email) {
-       appReady = false; 
       loading(false); showLogin();
       toast('Could not detect email.','err');
       await sb.auth.signOut();
@@ -680,7 +679,6 @@ async function bootApp(user) {
       .limit(1);
 
     if (error || !data?.[0]) {
-       appReady = false; 
       loading(false); showLogin();
       toast('Email not registered. Contact HR.','err');
       await sb.auth.signOut();
